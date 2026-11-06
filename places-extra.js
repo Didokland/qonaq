@@ -11,8 +11,8 @@
      Пустой список [] = блок с фото не показывается.
      ------------------------------------------------------------------------ */
   const PHOTOS = {
-    'restaurant-1465': ['places/restaurant-1465.jpg'],
-    'restaurant-tary':     ['places/tary.jpg'],
+    'restaurant-1465': ['restaurant-1465.jpg'],
+    'restaurant-tary':     ['tary.jpg'],
     'congress-hall':       [],
     'akimat':              [],
     'farabi-library':      [],

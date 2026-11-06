@@ -1,6 +1,6 @@
 const PHOTOS = {
   'restaurant-1465': ['places/restaurant-1465.jpg'],
-  'restaurant-tary': ['places/restaurant-tary.jpg'],
+  'restaurant-tary': ['places/tary.jpg'],
   'congress-hall': ['places/congress-hall.jpg'],
   'akimat': ['places/akimat.jpg'],
   'farabi-library': ['places/farabi-library.jpg'],
