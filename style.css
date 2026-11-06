@@ -1,0 +1,2508 @@
+/* ==========================================================================
+   QONAQ — Official Tourism Website Design System (Turkistan, Kazakhstan)
+   Palette: Deep Teal (#0a3a47), Turquoise (#0f5c6e), Gold (#c8962e),
+            Warm Sand (#f5f1e8), Soft Ivory (#faf8f3), White (#ffffff)
+   ========================================================================== */
+
+:root {
+  /* Brand Colors */
+  --blue: #0f5c6e;
+  --blue-light: #18778d;
+  --blue-dark: #094350;
+  --deep: #0a3a47;
+  --deep-dark: #06222b;
+  --gold: #c8962e;
+  --gold-hover: #dfaa38;
+  --gold-soft: #fbf5e7;
+  --gold-border: rgba(200, 150, 46, 0.35);
+
+  /* Neutrals */
+  --sand: #f5f1e8;
+  --sand-light: #faf8f3;
+  --sand-dark: #e8e1d3;
+  --ink: #1b282d;
+  --ink-soft: #4c5d64;
+  --ink-muted: #72828a;
+  --line: #ded8cb;
+  --line-light: #ece7db;
+  --card-bg: #ffffff;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 2px 8px rgba(10, 42, 53, 0.06);
+  --shadow-md: 0 6px 20px rgba(10, 42, 53, 0.09);
+  --shadow-lg: 0 14px 34px rgba(10, 42, 53, 0.14);
+  --shadow-glass: 0 20px 48px rgba(0, 0, 0, 0.45);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+}
+
+/* Base Reset & Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background-color: var(--sand);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease;
+}
+
+/* Home Screen Theme */
+body[data-screen="home"] {
+  background-color: var(--deep-dark);
+}
+
+h1, h2, h3, h4, .btn, nav, button, .tag, .badge, .feed-cat-chip {
+  font-family: "Trebuchet MS", "Lucida Grande", system-ui, sans-serif;
+}
+
+h1 {
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.15;
+  color: var(--deep);
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 4vw, 1.85rem);
+  color: var(--deep);
+  margin-bottom: 16px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.22rem;
+  color: var(--deep);
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover {
+  color: var(--blue-dark);
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   VIDEO BACKGROUND & READABILITY OVERLAY
+   ========================================================================== */
+
+.site-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  background: radial-gradient(ellipse at 50% 30%, rgba(10, 48, 58, 0.45) 0%, rgba(8, 30, 38, 0.72) 65%, rgba(5, 20, 26, 0.92) 100%);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Video is active exclusively on the home screen */
+body[data-screen="home"] .site-video {
+  opacity: 1;
+  visibility: visible;
+}
+
+body[data-screen="home"] .video-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   HEADER NAVIGATION
+   ========================================================================== */
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(8, 35, 43, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  flex-wrap: wrap;
+}
+
+.logo {
+  color: var(--gold);
+  font: 800 1.35rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--gold-hover);
+  transform: scale(1.02);
+}
+
+nav {
+  display: flex;
+  gap: 6px;
+  margin-inline-start: auto;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+  font-size: 0.94rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  color: var(--gold);
+  font-weight: 700;
+  background: rgba(200, 150, 46, 0.12);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* Language Dropdown in Header */
+.lang {
+  position: relative;
+}
+
+.lang > button {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.lang > button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.menu {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 8px);
+  background: #ffffff;
+  color: var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--line);
+  min-width: 200px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 8px;
+  z-index: 100;
+  animation: fadeInDown 0.2s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.opt {
+  display: block;
+  width: 100%;
+  text-align: start;
+  background: none;
+  border: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.opt:hover {
+  background: var(--sand);
+  color: var(--blue);
+}
+
+.opt.on {
+  background: var(--blue);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.more {
+  width: 100%;
+  color: var(--blue);
+  background: var(--sand);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+.more:hover {
+  background: var(--sand-dark);
+}
+
+/* Mobile Header Layout */
+@media (max-width: 680px) {
+  .top {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  nav {
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 4px;
+    justify-content: space-around;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nav-link {
+    font-size: 0.86rem;
+    padding: 5px 8px;
+  }
+}
+
+/* ==========================================================================
+   LAYOUT WRAPPER (MAIN CONTENT + RIGHT-SIDE FEED)
+   ========================================================================== */
+
+.layout-wrap {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 32px;
+  align-items: start;
+}
+
+.main-content {
+  min-width: 0;
+}
+
+/* Screens */
+.screen {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--blue);
+  color: #ffffff;
+  border: 2px solid var(--blue);
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  color: #ffffff;
+}
+
+.btn.big {
+  padding: 14px 34px;
+  font-size: 1.15rem;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #07222a;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(200, 150, 46, 0.38);
+}
+
+.btn.big:hover {
+  background: var(--gold-hover);
+  border-color: var(--gold-hover);
+  color: #05191f;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(200, 150, 46, 0.5);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
+.btn.ghost:hover {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.btn.whatsapp {
+  background: #25d366;
+  border-color: #25d366;
+  color: #ffffff;
+}
+
+.btn.whatsapp:hover {
+  background: #1eb855;
+  border-color: #1eb855;
+  color: #ffffff;
+}
+
+.backbtn {
+  background: none;
+  border: 0;
+  color: var(--blue);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  padding: 6px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.backbtn:hover {
+  color: var(--blue-dark);
+  transform: translateX(-3px);
+}
+
+[dir="rtl"] .backbtn:hover {
+  transform: translateX(3px);
+}
+
+/* Cards (Places, Hotels, Guides) */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card h3 {
+  margin: 14px 0 6px;
+  color: var(--deep);
+  font-size: 1.3rem;
+}
+
+.card p {
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+.card .row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.qrbtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  width: 120px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.qrbtn:hover {
+  transform: scale(1.03);
+}
+
+.hint {
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+
+.badge {
+  display: inline-block;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold);
+  color: #795200;
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  font: 600 0.78rem "Trebuchet MS", sans-serif;
+  margin: 2px 0 8px;
+  letter-spacing: 0.04em;
+}
+
+/* Image Placeholders and Hydration */
+.ph {
+  position: relative;
+  width: 100%;
+  background: var(--sand-dark);
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 12px;
+  color: var(--ink-muted);
+  font: 600 0.85rem "Trebuchet MS", sans-serif;
+}
+
+.ph svg {
+  width: 36px;
+  height: 36px;
+  stroke: var(--ink-muted);
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.ph.has-img {
+  border: 0;
+  padding: 0;
+  background: #061920;
+}
+
+.ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.r43 { aspect-ratio: 4 / 3; }
+.r169 { aspect-ratio: 16 / 9; }
+.sq { aspect-ratio: 1 / 1; }
+
+.paybox {
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+/* Map area & Pins */
+.map {
+  aspect-ratio: 4 / 3;
+  min-height: 250px;
+  position: relative;
+}
+
+.pin {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid var(--blue);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font: 700 0.8rem "Trebuchet MS", sans-serif;
+  color: var(--deep);
+  box-shadow: var(--shadow-sm);
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.route {
+  margin-top: 14px;
+  padding: 14px 18px;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  font: 600 0.9rem "Trebuchet MS", sans-serif;
+  color: var(--ink-soft);
+}
+
+/* Steps list (About page) */
+.steps {
+  list-style: none;
+  padding: 0;
+  counter-reset: s;
+}
+
+.steps li {
+  counter-increment: s;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 18px 16px 56px;
+  margin-bottom: 12px;
+  position: relative;
+  font-size: 1.02rem;
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.steps li::before {
+  content: counter(s);
+  position: absolute;
+  inset-inline-start: 14px;
+  top: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #ffffff;
+  text-align: center;
+  line-height: 30px;
+  font: 700 0.95rem sans-serif;
+}
+
+[dir="rtl"] .steps li {
+  padding: 16px 56px 16px 18px;
+}
+
+/* ==========================================================================
+   HOMEPAGE GLASS CARD & HERO CONTRAST (Fixes Readability)
+   ========================================================================== */
+
+.home {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.hero-glass-card {
+  background: rgba(7, 30, 38, 0.76);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 150, 46, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 34px 26px;
+  box-shadow: var(--shadow-glass);
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-badge-tag {
+  display: inline-block;
+  background: rgba(200, 150, 46, 0.2);
+  border: 1px solid var(--gold);
+  color: var(--gold-hover);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  font: 700 0.8rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.hero-glass-card h1 {
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.hero-desc {
+  max-width: 52ch;
+  margin: 0 auto 22px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #f1f7f9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.home-photo-box {
+  max-width: 440px;
+  margin: 0 auto 24px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Language Panel in Hero Glass Container */
+.langpanel {
+  background: rgba(9, 36, 45, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin: 0 auto 24px;
+  max-width: 680px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.langgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.langgrid.extra {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+.lbtn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  font-size: 0.96rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.lbtn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: var(--gold);
+}
+
+.lbtn.on {
+  background: var(--gold);
+  color: #07222a;
+  border-color: var(--gold);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(200, 150, 46, 0.45);
+}
+
+.morebtn {
+  display: block;
+  width: 100%;
+  margin: 12px 0 0;
+  background: none;
+  border: 0;
+  color: var(--gold-hover);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.morebtn:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+@media (min-width: 760px) {
+  .langgrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ==========================================================================
+   GUIDE PROFILE SCREEN
+   ========================================================================== */
+
+.guide-screen {
+  animation: fadeIn 0.3s ease;
+}
+
+.guide-header-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.guide-portrait-box {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--gold);
+  box-shadow: 0 6px 20px rgba(200, 150, 46, 0.3);
+  position: relative;
+  background: var(--deep);
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.guide-portrait-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-name {
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  color: var(--deep);
+  margin-bottom: 4px;
+}
+
+.guide-role {
+  color: var(--blue);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.guide-stats-strip {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0 16px;
+}
+
+.guide-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--sand);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font: 600 0.82rem "Trebuchet MS", sans-serif;
+  color: var(--deep);
+}
+
+.guide-stat-pill.verified {
+  background: #e8f7ee;
+  border-color: #27ae60;
+  color: #1e7e43;
+}
+
+.guide-stat-pill.rating {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+  color: #795200;
+}
+
+.guide-actions-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Guide Sections */
+.guide-section {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line-light);
+  color: var(--deep);
+  font-size: 1.35rem;
+}
+
+.guide-bio-text {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+/* Languages Grid */
+.guide-langs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.guide-lang-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.guide-lang-name {
+  font-weight: 700;
+  color: var(--deep);
+  font-size: 0.98rem;
+}
+
+.guide-lang-level {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+/* Expertise Grid */
+.guide-expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.guide-expertise-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: transform 0.2s ease;
+}
+
+.guide-expertise-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+}
+
+.guide-expertise-card h4 {
+  font-size: 1.05rem;
+  color: var(--blue-dark);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guide-expertise-card p {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/* Tours & Itineraries */
+.guide-tour-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease;
+}
+
+.guide-tour-card:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-tour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.guide-tour-title {
+  font-size: 1.15rem;
+  color: var(--deep);
+  font-weight: 700;
+}
+
+.guide-tour-duration {
+  background: var(--deep);
+  color: #ffffff;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font: 700 0.78rem "Trebuchet MS", sans-serif;
+}
+
+.guide-tour-desc {
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.guide-tour-highlights {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.guide-tour-highlights li {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font: 600 0.8rem "Trebuchet MS", sans-serif;
+  color: var(--ink);
+}
+
+/* Reviews List */
+.guide-reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.guide-reviews-demo-badge {
+  background: var(--sand-dark);
+  color: var(--ink-soft);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  font: 600 0.75rem "Trebuchet MS", sans-serif;
+}
+
+.guide-review-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.guide-review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.guide-review-author {
+  font-weight: 700;
+  color: var(--deep);
+  font-size: 0.95rem;
+}
+
+.guide-review-stars {
+  color: var(--gold);
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
+
+.guide-review-text {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 680px) {
+  .guide-header-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .guide-stats-strip, .guide-actions-row {
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   RIGHT-SIDE NEWS AND DISCOVERY FEED
+   ========================================================================== */
+
+.discovery-aside {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Feed appearance on Home screen (Glass style) */
+body[data-screen="home"] .discovery-aside {
+  background: rgba(7, 30, 38, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 150, 46, 0.35);
+  box-shadow: var(--shadow-glass);
+}
+
+body[data-screen="home"] .discovery-aside h3 {
+  color: #ffffff;
+}
+
+body[data-screen="home"] .feed-header-subtitle {
+  color: #dbe8ec;
+}
+
+.feed-header {
+  margin-bottom: 14px;
+}
+
+.feed-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.feed-header h3 {
+  font-size: 1.15rem;
+  color: var(--deep);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.feed-demo-badge {
+  background: var(--gold-soft);
+  color: #795200;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font: 700 0.7rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+body[data-screen="home"] .feed-demo-badge {
+  background: rgba(200, 150, 46, 0.25);
+  color: var(--gold-hover);
+  border-color: var(--gold);
+}
+
+.feed-header-subtitle {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+
+/* Category Filter Tabs */
+.feed-filters-wrap {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  scrollbar-width: thin;
+}
+
+.feed-filter-btn {
+  background: var(--sand);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font: 600 0.8rem "Trebuchet MS", sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.feed-filter-btn:hover {
+  background: var(--sand-dark);
+  color: var(--ink);
+}
+
+.feed-filter-btn.active {
+  background: var(--blue);
+  color: #ffffff;
+  border-color: var(--blue);
+  font-weight: 700;
+}
+
+body[data-screen="home"] .feed-filter-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f0f6f8;
+}
+
+body[data-screen="home"] .feed-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+body[data-screen="home"] .feed-filter-btn.active {
+  background: var(--gold);
+  color: #07222a;
+  border-color: var(--gold);
+}
+
+/* Feed Cards Stream */
+.feed-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feed-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feed-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-screen="home"] .feed-card {
+  background: rgba(9, 36, 45, 0.7);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.feed-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--deep);
+  overflow: hidden;
+}
+
+.feed-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.feed-card:hover .feed-card-media img {
+  transform: scale(1.04);
+}
+
+.feed-cat-chip {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(10, 58, 71, 0.9);
+  color: #ffffff;
+  font: 700 0.72rem "Trebuchet MS", sans-serif;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+.feed-sponsored-chip {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(200, 150, 46, 0.92);
+  color: #1a1200;
+  font: 800 0.7rem "Trebuchet MS", sans-serif;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+[dir="rtl"] .feed-cat-chip { left: auto; right: 8px; }
+[dir="rtl"] .feed-sponsored-chip { right: auto; left: 8px; }
+
+.feed-card-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.feed-date {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+body[data-screen="home"] .feed-date {
+  color: #9cb5be;
+}
+
+.feed-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--deep);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+body[data-screen="home"] .feed-card-title {
+  color: #ffffff;
+}
+
+.feed-card-desc {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+body[data-screen="home"] .feed-card-desc {
+  color: #cfdfe4;
+}
+
+.feed-card-action {
+  align-self: flex-start;
+  font: 700 0.84rem "Trebuchet MS", sans-serif;
+  color: var(--blue);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.feed-card-action:hover {
+  color: var(--blue-dark);
+  transform: translateX(2px);
+}
+
+[dir="rtl"] .feed-card-action:hover {
+  transform: translateX(-2px);
+}
+
+body[data-screen="home"] .feed-card-action {
+  color: var(--gold-hover);
+}
+
+body[data-screen="home"] .feed-card-action:hover {
+  color: #ffffff;
+}
+
+/* Mobile & Tablet Discovery Feed */
+@media (max-width: 1039px) {
+  .layout-wrap {
+    grid-template-columns: 1fr;
+    padding: 18px 16px 36px;
+    gap: 28px;
+  }
+  .discovery-aside {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+  .feed-stream {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+}
+
+/* ==========================================================================
+   SOCIAL MEDIA & TOURISM FOOTER
+   ========================================================================== */
+
+.site-footer {
+  width: 100%;
+  background: var(--deep-dark);
+  color: #ffffff;
+  border-top: 2px solid var(--gold);
+  padding: 42px 20px 24px;
+  margin-top: auto;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.footer-container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.footer-brand .logo {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.footer-tagline {
+  color: #cde0e5;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 36ch;
+  margin-bottom: 14px;
+}
+
+.footer-col-title {
+  color: var(--gold);
+  font: 700 1.05rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.footer-nav-list, .footer-contact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-nav-link {
+  color: #d6e5e9;
+  font-size: 0.92rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.footer-nav-link:hover {
+  color: var(--gold);
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .footer-nav-link:hover {
+  transform: translateX(-3px);
+}
+
+.footer-contact-item {
+  color: #d6e5e9;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.footer-contact-item a {
+  color: #ffffff;
+}
+
+.footer-contact-item a:hover {
+  color: var(--gold);
+}
+
+/* Social Media Grid */
+.footer-social-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-social-note {
+  font-size: 0.8rem;
+  color: #9ab4bd;
+  margin-bottom: 4px;
+}
+
+.footer-social-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font: 600 0.84rem "Trebuchet MS", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.social-icon-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.social-icon-btn.is-active:hover {
+  background: var(--gold);
+  color: #07222a;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 150, 46, 0.35);
+}
+
+.social-icon-btn.is-disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.04);
+  border-style: dashed;
+}
+
+.social-icon-btn .unconfigured-pill {
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #b0c9d1;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+[dir="rtl"] .social-icon-btn .unconfigured-pill {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Bottom Copyright Bar */
+.footer-bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.84rem;
+  color: #9cb5be;
+}
+
+@media (max-width: 900px) {
+  .footer-main-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   DEMO NOTICE MODAL
+   ========================================================================== */
+
+.demo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.demo-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 18, 24, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.demo-modal-dialog {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-glass);
+  text-align: center;
+  animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.demo-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: 0;
+  font-size: 1.5rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+[dir="rtl"] .demo-modal-close {
+  right: auto;
+  left: 14px;
+}
+
+.demo-modal-close:hover {
+  color: var(--ink);
+}
+
+.demo-modal-badge {
+  display: inline-block;
+  background: var(--gold-soft);
+  color: #795200;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  font: 700 0.76rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.demo-modal-dialog h3 {
+  color: var(--deep);
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.demo-modal-dialog p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.demo-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+/* ==========================================================================
+   EDITORIAL TRAVEL GUIDE MAGAZINE STYLES (guide.js & #guide)
+   ========================================================================== */
+
+.guide-article-wrap {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Hero Magazine Header */
+.guide-hero {
+  background: linear-gradient(135deg, rgba(10, 58, 71, 0.97) 0%, rgba(6, 34, 43, 0.99) 100%);
+  border-radius: var(--radius-lg);
+  padding: 38px 30px;
+  color: #ffffff;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gold-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-hero::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(200, 150, 46, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.guide-edition-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: #07222a;
+  font: 700 0.78rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.1em;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.guide-hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.16;
+  color: #ffffff;
+  margin-bottom: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.guide-hero-subtitle {
+  color: #e2edf0;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  margin-bottom: 22px;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+.guide-advisory-alert {
+  background: rgba(200, 150, 46, 0.16);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: #fbf5e7;
+  line-height: 1.55;
+}
+
+/* Qonaq Hospitality Card */
+.guide-qonaq-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: 26px 28px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-qonaq-card h3 {
+  color: var(--deep);
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  font-family: Georgia, serif;
+}
+
+.guide-qonaq-quote {
+  font-style: italic;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.guide-qonaq-text {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+/* Quick Facts Strip */
+.guide-facts-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.guide-fact-box {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.guide-fact-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+}
+
+.guide-fact-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.guide-fact-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.guide-fact-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--deep);
+  line-height: 1.25;
+}
+
+/* Sticky Chapter Navigation Bar */
+.guide-toc-nav {
+  position: sticky;
+  top: 60px;
+  z-index: 28;
+  background: rgba(245, 241, 232, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 34px;
+}
+
+.guide-toc-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.guide-toc-pill {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--deep);
+  border-radius: var(--radius-pill);
+  padding: 7px 16px;
+  font: 600 0.84rem "Trebuchet MS", sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.guide-toc-pill:hover {
+  background: var(--sand-dark);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.guide-toc-pill.active {
+  background: var(--deep);
+  color: #ffffff;
+  border-color: var(--deep);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(10, 58, 71, 0.25);
+}
+
+/* Chapter Main Sections */
+.guide-chapter-section {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 34px 28px;
+  margin-bottom: 34px;
+  box-shadow: var(--shadow-sm);
+  scroll-margin-top: 120px;
+}
+
+.guide-ch-header {
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line-light);
+}
+
+.guide-ch-num {
+  display: inline-block;
+  background: var(--gold-soft);
+  color: #795200;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-pill);
+  padding: 2px 12px;
+  font: 700 0.8rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.guide-ch-title {
+  color: var(--deep);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-family: Georgia, serif;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.guide-ch-summary {
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.guide-subheading {
+  color: var(--deep);
+  font-size: 1.25rem;
+  font-family: Georgia, serif;
+  margin: 24px 0 10px;
+}
+
+.guide-p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+/* Callout Box for Local Tips */
+.guide-callout {
+  background: #faf6eb;
+  border-left: 5px solid var(--gold);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-callout-title {
+  color: #795200;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guide-callout p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Apps Grid */
+.guide-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 16px;
+  margin: 20px 0 26px;
+}
+
+.guide-app-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-app-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--blue);
+}
+
+.guide-app-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.guide-app-cat {
+  background: var(--deep);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font: 700 0.72rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.guide-app-link {
+  font: 700 0.84rem "Trebuchet MS", sans-serif;
+  color: var(--blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.guide-app-link:hover {
+  text-decoration: underline;
+  color: var(--blue-dark);
+}
+
+.guide-app-name {
+  font-size: 1.15rem;
+  color: var(--deep);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.guide-app-desc {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  flex-grow: 1;
+}
+
+.guide-app-tip {
+  font-size: 0.82rem;
+  color: #795200;
+  background: var(--gold-soft);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  border: 1px dashed var(--gold);
+}
+
+/* Interactive Tool Cards */
+.tool-widget-card {
+  background: #ffffff;
+  border: 2px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px;
+  margin: 28px 0;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.tool-widget-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: var(--gold);
+  color: #07222a;
+  font: 800 0.74rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.08em;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+[dir="rtl"] .tool-widget-badge {
+  right: auto;
+  left: 20px;
+}
+
+.tool-widget-card h4 {
+  color: var(--deep);
+  font-size: 1.35rem;
+  font-family: Georgia, serif;
+}
+
+/* Converter Inputs */
+.converter-inputs-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.tool-input-group label {
+  display: block;
+  font: 700 0.84rem "Trebuchet MS", sans-serif;
+  color: var(--deep);
+  margin-bottom: 6px;
+}
+
+.tool-input-group input,
+.tool-input-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.tool-input-group input:focus,
+.tool-input-group select:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+
+/* Converter Rates Bar */
+.converter-rates-bar {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin: 16px 0;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.rate-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.rate-field input {
+  width: 76px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  color: var(--deep);
+  text-align: center;
+}
+
+/* Converter Results Grid */
+.converter-outputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.converter-res-card {
+  background: var(--deep);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.converter-res-card.highlight {
+  background: var(--gold);
+  color: #07222a;
+}
+
+.converter-res-curr {
+  font: 700 0.82rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.converter-res-val {
+  font-size: 1.45rem;
+  font-weight: 800;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Taxi Quote Checker */
+.quick-presets {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 12px 0 16px;
+}
+
+.preset-btn {
+  background: var(--sand);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font: 600 0.8rem "Trebuchet MS", sans-serif;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-btn:hover {
+  background: var(--sand-dark);
+  border-color: var(--blue);
+}
+
+.taxi-verdict-box {
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: all 0.25s ease;
+}
+
+.taxi-verdict-box.verdict-green {
+  background: #eafaf1;
+  border: 2px solid #27ae60;
+  color: #1e7e43;
+}
+
+.taxi-verdict-box.verdict-yellow {
+  background: #fef9e7;
+  border: 2px solid #f39c12;
+  color: #9a6300;
+}
+
+.taxi-verdict-box.verdict-red {
+  background: #fdedec;
+  border: 2px solid #e74c3c;
+  color: #922b21;
+}
+
+.verdict-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verdict-body {
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+/* Responsive Data Tables */
+.guide-data-table-wrap {
+  overflow-x: auto;
+  margin: 20px 0 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  text-align: start;
+}
+
+.guide-data-table th {
+  background: var(--deep);
+  color: #ffffff;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-family: "Trebuchet MS", sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.guide-data-table td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-light);
+  color: var(--ink);
+}
+
+.guide-data-table tr:nth-child(even) td {
+  background: var(--sand-light);
+}
+
+/* Destination Cards (Where to Go) */
+.guide-dest-card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-dest-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+}
+
+.guide-dest-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--deep);
+  overflow: hidden;
+}
+
+.guide-dest-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.guide-dest-card:hover .guide-dest-media img {
+  transform: scale(1.03);
+}
+
+.guide-dest-time-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(10, 58, 71, 0.92);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font: 700 0.76rem "Trebuchet MS", sans-serif;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(4px);
+}
+
+[dir="rtl"] .guide-dest-time-tag {
+  right: auto;
+  left: 12px;
+}
+
+.guide-dest-body {
+  padding: 22px 24px;
+}
+
+.guide-dest-name {
+  color: var(--deep);
+  font-size: 1.45rem;
+  font-family: Georgia, serif;
+  margin-bottom: 4px;
+}
+
+.guide-dest-sub {
+  color: var(--blue);
+  font: 600 0.94rem "Trebuchet MS", sans-serif;
+  margin-bottom: 12px;
+}
+
+.guide-dest-highlights {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+
+.guide-dest-highlights li {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  font: 600 0.8rem "Trebuchet MS", sans-serif;
+  color: var(--deep);
+}
+
+/* Itinerary Cards */
+.guide-itin-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 26px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-itin-card.gold-theme {
+  border-top: 5px solid var(--gold);
+}
+
+.guide-itin-card.teal-theme {
+  border-top: 5px solid var(--blue);
+}
+
+.guide-itin-card.deep-theme {
+  border-top: 5px solid var(--deep);
+}
+
+.guide-itin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.guide-itin-badge {
+  background: var(--sand-dark);
+  color: var(--deep);
+  font: 700 0.8rem "Trebuchet MS", sans-serif;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.guide-itin-title {
+  color: var(--deep);
+  font-size: 1.4rem;
+  font-family: Georgia, serif;
+  margin-bottom: 6px;
+}
+
+.guide-itin-meta {
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+
+.guide-itin-days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-itin-day-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--line-light);
+}
+
+.guide-itin-day-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.guide-day-pill {
+  background: var(--sand);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font: 700 0.82rem "Trebuchet MS", sans-serif;
+  color: var(--deep);
+  text-align: center;
+}
+
+.guide-day-title {
+  font-weight: 700;
+  color: var(--deep);
+  font-size: 0.98rem;
+  margin-bottom: 4px;
+}
+
+.guide-day-desc {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* Floating Return to Top Button */
+.guide-back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--deep);
+  color: #ffffff;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  z-index: 40;
+  border: 2px solid var(--gold);
+  transition: transform 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+}
+
+.guide-back-to-top:hover {
+  background: var(--blue);
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 680px) {
+  .converter-inputs-row {
+    grid-template-columns: 1fr;
+  }
+  .guide-itin-day-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .guide-day-pill {
+    align-self: flex-start;
+  }
+  .guide-chapter-section {
+    padding: 24px 18px;
+  }
+}

@@ -1,0 +1,21 @@
+const PHOTOS = {
+  'restaurant-1465': ['places/restaurant-1465.jpg'],
+  'restaurant-tary': ['places/restaurant-tary.jpg'],
+  'congress-hall': ['places/congress-hall.jpg'],
+  'akimat': ['places/akimat.jpg'],
+  'farabi-library': ['places/farabi-library.jpg'],
+  'mktu': ['places/mktu.jpg'],
+  'turkistan-hub': ['places/turkistan-hub.jpg'],
+  'khanshaiym-plaza': ['places/khanshaiym-plaza.jpg'],
+  'wosong-university': ['places/wosong-university.jpg'],
+  'great-steppe-museum': ['places/great-steppe-museum.jpg'],
+  'rabia-sultan-begim': ['places/rabia-sultan-begim.jpg'],
+  'kylwet-mosque': ['places/kylwet-mosque.jpg'],
+  'sauran': ['places/sauran.jpg'],
+  'arystan-bab': ['places/arystan-bab.jpeg'],
+  'otrar': ['places/otrar.jpg'],
+  'ukash-ata': ['places/ukash-ata.jpg'],
+  'esimkhan': ['places/esimkhan.jpg'],
+  'gauhar-ana': ['places/gauhar-ana.jpg'],
+  'kumshyk-ata': ['places/kumshyk-ata.jpg']
+};

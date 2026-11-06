@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QONAQ — Turkistan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-screen="home">
+  <!-- Background video for Turkistan scenery on homepage -->
+  <video id="siteVideo" class="site-video" autoplay muted loop playsinline>
+    <source src="turkestanstand.mp4" type="video/mp4">
+  </video>
+
+  <!-- Dark translucent overlay over video -->
+  <div class="video-overlay" id="videoOverlay"></div>
+
+  <!-- Header: logo, 5 navigation items, language dropdown -->
+  <header class="top">
+    <a class="logo" href="#home">QONAQ</a>
+    <nav>
+      <a href="#home" data-t="home" class="nav-link"></a>
+      <a href="#places" data-t="places" class="nav-link"></a>
+      <a href="#hotels" data-t="hotels" class="nav-link"></a>
+      <a href="#guide" data-t="guide" class="nav-link"></a>
+      <a href="#travel-guide" data-t="travelGuide" class="nav-link"></a>
+    </nav>
+    <div class="lang">
+      <button id="langBtn" aria-haspopup="true" aria-expanded="false">
+        🌐 <span id="langName"></span> ▾
+      </button>
+      <div class="menu" id="langMenu" hidden>
+        <div id="langMain"></div>
+        <button class="more" id="langMore"></button>
+        <div id="langExtra" hidden></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main layout container: primary screen on left, discovery feed on right -->
+  <div class="layout-wrap">
+    <main id="app" class="main-content" tabindex="-1"></main>
+    <aside id="discoveryFeed" class="discovery-aside" aria-label="News and Discovery Feed"></aside>
+  </div>
+
+  <!-- Complete social media & tourism footer -->
+  <footer id="siteFooter" class="site-footer"></footer>
+
+  <!-- Accessible Demo Notice Modal (for future booking & demo features) -->
+  <div id="demoModal" class="demo-modal" hidden role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
+    <div class="demo-modal-backdrop" id="demoModalBackdrop"></div>
+    <div class="demo-modal-dialog">
+      <button class="demo-modal-close" id="demoModalClose" aria-label="Close modal">&times;</button>
+      <div class="demo-modal-badge" id="demoModalBadge">DEMO FEATURE</div>
+      <h3 id="demoModalTitle"></h3>
+      <p id="demoModalBody"></p>
+      <div class="demo-modal-actions" id="demoModalActions"></div>
+    </div>
+  </div>
+
+  <script src="guide.js"></script>
+  <script src="script.js"></script>
+  <script src="places-extra.js"></script>
+  <script src="photos.js"></script>
+</body>
+</html>

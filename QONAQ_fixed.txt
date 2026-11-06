@@ -1,0 +1,236 @@
+/* QONAQ: multi-screen site in vanilla JS. Screens are chosen by the URL hash:
+   #home  #places  #place/yasawi  #pay/yasawi  #about                     */
+
+/* ===== 1. YOUR CONTENT: add places and image paths here ===== */
+const HERO_IMAGE = 'foto1.jpg';
+const PLACES = [
+  { id: 'yasawi',
+    tag: 'YASAWI',
+    img: 'foto2.jpg',                 // YASAWI_IMAGE
+    qr:  'foto3.png.jpeg',              // YASAWI_QR_IMAGE (card QR)
+    kaspi: 'foto3.png.jpeg',         // KASPI_QR_IMAGE (official payment QR)
+    map: 'foto4.jpeg',             // MAP_PLACEHOLDER (map picture, optional)
+    start: { label: 'QONAQ banner', lat: null, lng: null },   // fill in later
+    end:   { lat: null, lng: null },                           // fill in later
+    name: { en:'Khoja Ahmed Yasawi Mausoleum', kk:'Қожа Ахмет Яссауи кесенесі', ru:'Мавзолей Ходжи Ахмеда Ясави',
+      tr:'Hoca Ahmet Yesevi Türbesi', uz:'Xoja Ahmad Yassaviy maqbarasi', ar:'ضريح خوجه أحمد يسوي',
+      zh:'霍加·艾哈迈德·亚萨维陵墓', ko:'호자 아흐메트 야사위 영묘', ja:'ホージャ・アフマド・ヤサヴィー廟', fr:'Mausolée de Khoja Ahmed Yasawi' },
+    desc: { en:'Built in the late 14th century by order of Timur, this UNESCO World Heritage site honors the Sufi poet and mystic Khoja Ahmed Yasawi.',
+      kk:'XIV ғасырдың аяғында Әмір Темірдің бұйрығымен салынған ЮНЕСКО-ның Дүниежүзілік мұрасы суфи ақыны Қожа Ахмет Яссауиге арналған.',
+      ru:'Построен в конце XIV века по приказу Тамерлана. Объект Всемирного наследия ЮНЕСКО посвящён суфийскому поэту Ходже Ахмеду Ясави.' } },
+  { id: 'caravanserai',
+    tag: 'CARAVANSERAI',
+    img: 'foto5.jpg',               // CARAVANSERAI_IMAGE
+    qr:  'foto3.png.jpeg',            // CARAVANSERAI_QR_IMAGE (card QR)
+    kaspi: 'foto3.png.jpeg',       // official Kaspi QR for this place
+    kaspiLabel: 'foto3.png.jpeg',                 // label on the payment screen
+    map: 'foto6.jpeg',           // MAP_PLACEHOLDER (optional)
+    start: { label: 'QONAQ banner', lat: null, lng: null },   // fill in later
+    end:   { lat: null, lng: null },                           // fill in later
+    name: { en:'Caravanserai', kk:'Керуен-сарай', ru:'Караван-сарай', tr:'Kervansaray', uz:'Karvonsaroy',
+      ar:'كارافانسراي', zh:'商队驿站', ko:'캐러밴서라이', ja:'キャラバンサライ', fr:'Caravansérail' },
+    desc: { en:'Caravanserais were roadside inns where Silk Road merchants and their caravans rested. Turkistan’s caravanserai recalls this trading heritage.',
+      kk:'Керуен-сарай — Жібек жолы көпестері мен керуендері аялдайтын жол бойындағы тұрақ. Түркістандағы керуен-сарай осы сауда мұрасын еске салады.',
+      ru:'Караван-сарай — придорожный постоялый двор, где отдыхали купцы и караваны Великого шёлкового пути. Туркестанский караван-сарай напоминает об этом торговом наследии.' } }
+];
+
+/* ===== HOTELS: hotel information and image paths ===== */
+const HOTELS = [
+  { id: 'hotel1', tag: 'RIXOS',
+    img: 'rix.jpg', map: 'foto7.jpeg',
+    name: { en:'RIXOS Turkistan', kk:'RIXOS Turkistan', ru:'RIXOS Turkistan', tr:'RIXOS Turkistan', uz:'RIXOS Turkistan', ar:'RIXOS Turkistan', zh:'RIXOS Turkistan', ko:'RIXOS Turkistan', ja:'RIXOS Turkistan', fr:'RIXOS Turkistan', de:'RIXOS Turkistan', es:'RIXOS Turkistan', it:'RIXOS Turkistan', hi:'RIXOS Turkistan', ur:'RIXOS Turkistan', pt:'RIXOS Turkistan', fa:'RIXOS Turkistan', uk:'RIXOS Turkistan', pl:'RIXOS Turkistan', id:'RIXOS Turkistan', az:'RIXOS Turkistan' },
+    desc: { en:'A well-known five-star hotel in Turkistan, offering a comfortable stay for visitors.', kk:'Түркістандағы танымал бес жұлдызды қонақүй. Қонақтарға жайлы демалыс ұсынады.', ru:'Один из самых узнаваемых пятизвёздочных отелей Туркестана, предлагающий комфортное размещение.', tr:'Türkistan’da konforlu konaklama sunan tanınmış beş yıldızlı otel.', uz:'Turkistondagi taniqli besh yulduzli mehmonxona. Mehmonlarga qulay turar joy taklif etadi.', ar:'فندق خمس نجوم معروف في تركستان يوفر إقامة مريحة للزوار.', zh:'突厥斯坦知名的五星级酒店，为游客提供舒适的住宿体验。', ko:'투르키스탄에서 편안한 숙박을 제공하는 잘 알려진 5성급 호텔입니다.', ja:'トルキスタンで快適な滞在を提供する、よく知られた5つ星ホテルです。', fr:'Un hôtel cinq étoiles réputé à Turkistan, offrant un séjour confortable.', de:'Ein bekanntes Fünf-Sterne-Hotel in Turkistan mit komfortabler Unterkunft.', es:'Un conocido hotel de cinco estrellas en Turkistán que ofrece una estancia cómoda.', it:'Un noto hotel a cinque stelle a Turkistan che offre un soggiorno confortevole.', hi:'तुर्किस्तान का एक प्रसिद्ध पाँच सितारा होटल, जो आरामदायक ठहरने की सुविधा देता है।', ur:'ترکستان کا معروف پانچ ستارہ ہوٹل، جو آرام دہ قیام فراہم کرتا ہے۔', pt:'Um conhecido hotel cinco estrelas em Turkistão, com uma estadia confortável.', fa:'هتلی پنج‌ستاره و شناخته‌شده در ترکستان با اقامتی راحت.', uk:'Відомий п’ятизірковий готель у Туркестані, що пропонує комфортне проживання.', pl:'Znany pięciogwiazdkowy hotel w Turkiestanie, oferujący komfortowy pobyt.', id:'Hotel bintang lima yang terkenal di Turkistan dengan akomodasi nyaman.', az:'Türküstanda rahat qalmaq təklif edən tanınmış beşulduzlu otel.'},
+    address: null },
+  { id: 'hotel2', tag: 'Family',
+    img: 'foto8.jpg', map: 'foto9.jpeg',
+    name: { en:'Family Hotel', kk:'Family қонақүйі', ru:'Family Hotel', tr:'Family Hotel', uz:'Family Hotel', ar:'Family Hotel', zh:'Family Hotel', ko:'Family Hotel', ja:'Family Hotel', fr:'Family Hotel', de:'Family Hotel', es:'Family Hotel', it:'Family Hotel', hi:'Family Hotel', ur:'Family Hotel', pt:'Family Hotel', fa:'Family Hotel', uk:'Family Hotel', pl:'Family Hotel', id:'Family Hotel', az:'Family Hotel' },
+    desc: { en:'A cozy hotel in Turkistan with a welcoming atmosphere for families and travelers.', kk:'Түркістандағы отбасылар мен саяхатшыларға арналған жайлы, қонақжай қонақүй.', ru:'Уютный отель в Туркестане с тёплой атмосферой для семей и путешественников.', tr:'Aileler ve gezginler için sıcak bir atmosfere sahip, Türkistan’da rahat bir otel.', uz:'Turkistondagi oilalar va sayohatchilar uchun shinam, mehmondo‘st mehmonxona.', ar:'فندق مريح في تركستان بأجواء ودودة للعائلات والمسافرين.', zh:'位于突厥斯坦的温馨酒店，为家庭和旅行者营造友好的氛围。', ko:'가족과 여행객을 위한 따뜻한 분위기의 투르키스탄 아늑한 호텔입니다.', ja:'家族や旅行者を温かく迎える、トルキスタンの居心地のよいホテルです。', fr:'Un hôtel accueillant à Turkistan, idéal pour les familles et les voyageurs.', de:'Ein gemütliches Hotel in Turkistan mit herzlicher Atmosphäre für Familien und Reisende.', es:'Un acogedor hotel en Turkistán con un ambiente agradable para familias y viajeros.', it:'Un hotel accogliente a Turkistan, ideale per famiglie e viaggiatori.', hi:'तुर्किस्तान का आरामदायक होटल, जहाँ परिवारों और यात्रियों के लिए स्वागतपूर्ण माहौल है।', ur:'ترکستان کا آرام دہ ہوٹل، جہاں خاندانوں اور مسافروں کے لیے خوشگوار ماحول ہے۔', pt:'Um hotel acolhedor em Turkistão, com ambiente agradável para famílias e viajantes.', fa:'هتلی دنج در ترکستان با فضایی صمیمی برای خانواده‌ها و مسافران.', uk:'Затишний готель у Туркестані з гостинною атмосферою для сімей і мандрівників.', pl:'Przytulny hotel w Turkiestanie z przyjazną atmosferą dla rodzin i podróżnych.', id:'Hotel nyaman di Turkistan dengan suasana ramah bagi keluarga dan wisatawan.', az:'Türküstanda ailələr və səyahətçilər üçün mehriban atmosferə malik rahat otel.'},
+    address: null }
+];
+
+/* ===== 2. TRANSLATIONS (missing keys fall back to English) ===== */
+const T = {
+ en:{home:'Home',places:'Places',about:'How it works',welcome:'Welcome to Turkistan. Choose your language and start exploring its historic sites.',explore:'Explore Turkistan',back:'← Back',view:'View place',how:'How to get there',more:'More languages',less:'Fewer languages',where:'Where you are / Where to go',start:'Start',dest:'Destination',payI:'Open the Kaspi app and scan this QR code.',s1:'Scan the tourism banner QR code.',s2:'Choose your preferred language.',s3:'Select a historical place.',s4:'Follow the route to the destination.',s5:'Scan the destination’s QR code for information or payment.',
+  placesT:'Places to visit',payT:'Pay with Kaspi',tapqr:'Tap the QR code to pay',route:'ROUTE_PLACEHOLDER — Route and directions will appear here',unset:'Coordinates not configured yet'},
+ kk:{home:'Басты бет',places:'Орындар',about:'Қалай жұмыс істейді',welcome:'Түркістанға қош келдіңіз. Тілді таңдап, тарихи орындармен танысыңыз.',explore:'Түркістанды зерттеу',back:'← Артқа',view:'Орынды көру',how:'Қалай жетуге болады',more:'Басқа тілдер',less:'Азырақ тіл',where:'Сіз қайдасыз / Қайда бару керек',start:'Бастау',dest:'Межелі орын',payI:'Kaspi қосымшасын ашып, осы QR кодты сканерлеңіз.',s1:'Туристік баннердегі QR кодты сканерлеңіз.',s2:'Өзіңізге ыңғайлы тілді таңдаңыз.',s3:'Тарихи орынды таңдаңыз.',s4:'Межелі орынға маршрутпен жүріңіз.',s5:'Ақпарат немесе төлем үшін межелі орынның QR кодын сканерлеңіз.',placesT:'Көруге болатын орындар',tapqr:'Төлеу үшін QR кодты басыңыз'},
+ ru:{home:'Главная',places:'Места',about:'Как это работает',welcome:'Добро пожаловать в Туркестан. Выберите язык и откройте для себя исторические места.',explore:'Исследовать Туркестан',back:'← Назад',view:'Открыть место',how:'Как добраться',more:'Другие языки',less:'Меньше языков',where:'Где вы / Куда идти',start:'Старт',dest:'Пункт назначения',payI:'Откройте приложение Kaspi и отсканируйте этот QR-код.',s1:'Отсканируйте QR-код на туристическом баннере.',s2:'Выберите удобный язык.',s3:'Выберите историческое место.',s4:'Следуйте по маршруту к месту.',s5:'Отсканируйте QR-код места для информации или оплаты.',placesT:'Места для посещения',tapqr:'Нажмите на QR-код для оплаты'},
+ tr:{home:'Ana sayfa',places:'Yerler',about:'Nasıl çalışır',welcome:'Türkistan’a hoş geldiniz. Dilinizi seçin ve tarihi yerleri keşfedin.',explore:'Türkistan’ı keşfet',back:'← Geri',view:'Yeri gör',how:'Nasıl gidilir',more:'Diğer diller',less:'Daha az dil',where:'Neredesiniz / Nereye gideceksiniz',start:'Başlangıç',dest:'Varış noktası',payI:'Kaspi uygulamasını açın ve bu QR kodu okutun.',s1:'Turizm afişindeki QR kodu okutun.',s2:'Dilinizi seçin.',s3:'Tarihi bir yer seçin.',s4:'Rotayı takip edin.',s5:'Bilgi veya ödeme için varış noktasının QR kodunu okutun.',placesT:'Gezilecek yerler',tapqr:'Ödemek için QR koda dokunun'},
+ uz:{home:'Bosh sahifa',places:'Joylar',about:'Qanday ishlaydi',welcome:'Turkistonga xush kelibsiz. Tilni tanlang va tarixiy joylarni kashf eting.',explore:'Turkistonni kashf eting',back:'← Orqaga',view:'Joyni ko‘rish',how:'Qanday borish mumkin',more:'Boshqa tillar',less:'Kamroq tillar',where:'Siz qayerdasiz / Qayerga borish kerak',start:'Boshlanish',dest:'Manzil',payI:'Kaspi ilovasini oching va ushbu QR kodni skanerlang.',s1:'Turizm bannerdagi QR kodni skanerlang.',s2:'Tilni tanlang.',s3:'Tarixiy joyni tanlang.',s4:'Marshrut bo‘yicha boring.',s5:'Ma’lumot yoki to‘lov uchun manzilning QR kodini skanerlang.',placesT:'Borish mumkin bo‘lgan joylar',tapqr:'To‘lash uchun QR kodni bosing'},
+ ar:{home:'الرئيسية',places:'الأماكن',about:'كيف يعمل',welcome:'مرحباً بك في تركستان. اختر لغتك وابدأ باستكشاف المواقع التاريخية.',explore:'استكشف تركستان',back:'رجوع ←',view:'عرض المكان',how:'كيفية الوصول',more:'لغات أخرى',less:'لغات أقل',where:'أين أنت / إلى أين تذهب',start:'البداية',dest:'الوجهة',payI:'افتح تطبيق Kaspi وامسح رمز QR هذا.',s1:'امسح رمز QR على لافتة السياحة.',s2:'اختر لغتك المفضلة.',s3:'اختر مكاناً تاريخياً.',s4:'اتبع المسار إلى الوجهة.',s5:'امسح رمز QR للوجهة للمعلومات أو الدفع.',placesT:'أماكن للزيارة',tapqr:'اضغط على رمز QR للدفع'},
+ zh:{home:'首页',places:'景点',about:'使用方法',welcome:'欢迎来到突厥斯坦。选择语言，开始探索历史古迹。',explore:'探索突厥斯坦',back:'← 返回',view:'查看景点',how:'如何前往',more:'更多语言',less:'收起语言',where:'你的位置 / 目的地',start:'起点',dest:'目的地',payI:'打开 Kaspi 应用并扫描此二维码。',s1:'扫描旅游横幅上的二维码。',s2:'选择你的语言。',s3:'选择一个历史景点。',s4:'沿路线前往目的地。',s5:'扫描目的地二维码获取信息或付款。',placesT:'推荐景点',tapqr:'点击二维码付款'},
+ ko:{home:'홈',places:'명소',about:'이용 방법',welcome:'투르키스탄에 오신 것을 환영합니다. 언어를 선택하고 역사 유적을 둘러보세요.',explore:'투르키스탄 탐험',back:'← 뒤로',view:'장소 보기',how:'가는 방법',more:'더 많은 언어',less:'언어 줄이기',where:'현재 위치 / 목적지',start:'출발',dest:'목적지',payI:'Kaspi 앱을 열고 이 QR 코드를 스캔하세요.',s1:'관광 배너의 QR 코드를 스캔하세요.',s2:'언어를 선택하세요.',s3:'역사 명소를 선택하세요.',s4:'경로를 따라 목적지로 가세요.',s5:'목적지의 QR 코드를 스캔해 정보나 결제를 확인하세요.',placesT:'방문할 곳',tapqr:'결제하려면 QR 코드를 누르세요'},
+ ja:{home:'ホーム',places:'名所',about:'使い方',welcome:'トルキスタンへようこそ。言語を選んで歴史的名所を巡りましょう。',explore:'トルキスタンを探索',back:'← 戻る',view:'場所を見る',how:'行き方',more:'その他の言語',less:'言語を閉じる',where:'現在地 / 目的地',start:'出発地',dest:'目的地',payI:'Kaspiアプリを開き、このQRコードをスキャンしてください。',s1:'観光バナーのQRコードをスキャン。',s2:'言語を選択。',s3:'歴史的な場所を選択。',s4:'ルートに沿って目的地へ。',s5:'目的地のQRコードで情報や支払いへ。',placesT:'訪れる場所',tapqr:'QRコードをタップして支払う'},
+ fr:{home:'Accueil',places:'Lieux',about:'Comment ça marche',welcome:'Bienvenue à Turkestan. Choisissez votre langue et explorez ses sites historiques.',explore:'Explorer Turkestan',back:'← Retour',view:'Voir le lieu',how:'Comment s’y rendre',more:'Plus de langues',less:'Moins de langues',where:'Où vous êtes / Où aller',start:'Départ',dest:'Destination',payI:'Ouvrez l’application Kaspi et scannez ce QR code.',s1:'Scannez le QR code de la bannière touristique.',s2:'Choisissez votre langue.',s3:'Sélectionnez un lieu historique.',s4:'Suivez l’itinéraire jusqu’à la destination.',s5:'Scannez le QR code de la destination pour l’info ou le paiement.',placesT:'Lieux à visiter',tapqr:'Touchez le QR code pour payer'}
+};
+// Keys for the Hotels screen (merged into T; missing languages fall back to English)
+const T2 = {
+ en:{hotels:'Hotels',sample:'Sample content: editable demo',addr:'Address: to be added',details:'View hotel details'},
+ kk:{hotels:'Қонақүйлер',sample:'Үлгі мазмұн: өңдеуге болады',addr:'Мекенжай: кейін қосылады',details:'Қонақүй мәліметтері'},
+ ru:{hotels:'Отели',sample:'Пример: можно изменить',addr:'Адрес: будет добавлен',details:'Подробнее об отеле'},
+ tr:{hotels:'Oteller',sample:'Örnek içerik: düzenlenebilir',addr:'Adres: eklenecek',details:'Otel ayrıntıları'},
+ uz:{hotels:'Mehmonxonalar',sample:'Namuna: tahrirlash mumkin',addr:'Manzil: keyin qo‘shiladi',details:'Mehmonxona tafsilotlari'},
+ ar:{hotels:'الفنادق',sample:'محتوى تجريبي: قابل للتعديل',addr:'العنوان: سيُضاف لاحقاً',details:'تفاصيل الفندق'},
+ zh:{hotels:'酒店',sample:'示例内容：可编辑',addr:'地址：待添加',details:'查看酒店详情'},
+ ko:{hotels:'호텔',sample:'샘플 콘텐츠: 수정 가능',addr:'주소: 추가 예정',details:'호텔 상세 보기'},
+ ja:{hotels:'ホテル',sample:'サンプル内容（編集可能）',addr:'住所：追加予定',details:'ホテル詳細を見る'},
+ fr:{hotels:'Hôtels',sample:'Contenu d’exemple : modifiable',addr:'Adresse : à ajouter',details:'Voir les détails de l’hôtel'}
+};
+for (const c in T2) Object.assign(T[c], T2[c]);
+const HOTEL_UI = {
+ de:['Hotels','Hoteladresse nicht angegeben','Hotel ansehen'],
+ es:['Hoteles','Dirección no disponible','Ver hotel'],
+ it:['Hotel','Indirizzo non disponibile','Dettagli hotel'],
+ hi:['होटल','पता उपलब्ध नहीं है','होटल विवरण'],
+ ur:['ہوٹل','پتہ دستیاب نہیں','ہوٹل کی تفصیلات'],
+ pt:['Hotéis','Endereço não informado','Ver detalhes do hotel'],
+ fa:['هتل‌ها','نشانی ثبت نشده است','جزئیات هتل'],
+ uk:['Готелі','Адресу не вказано','Деталі готелю'],
+ pl:['Hotele','Adres nie został podany','Szczegóły hotelu'],
+ id:['Hotel','Alamat belum tersedia','Detail hotel'],
+ az:['Otellər','Ünvan qeyd edilməyib','Otel məlumatları']
+};
+for (const c in HOTEL_UI) Object.assign(T[c], {hotels:HOTEL_UI[c][0], addr:HOTEL_UI[c][1], details:HOTEL_UI[c][2]});
+
+// code: [name, speech/html locale, rtl?]
+const MAIN  = {kk:['Қазақша'],ru:['Русский'],en:['English'],tr:['Türkçe'],uz:['O‘zbekcha'],ar:['العربية',1],zh:['中文'],ko:['한국어'],ja:['日本語'],fr:['Français']};
+const EXTRA = {de:['Deutsch'],es:['Español'],it:['Italiano'],hi:['हिन्दी'],ur:['اردو',1],pt:['Português'],fa:['فارسی',1],uk:['Українська'],pl:['Polski'],id:['Bahasa Indonesia'],az:['Azərbaycanca']};
+const ALL = Object.assign({}, MAIN, EXTRA);
+
+/* ===== 3. HELPERS ===== */
+const $ = id => document.getElementById(id);
+let lang = 'en', moreOpen = false;
+const t = k => (T[lang] && T[lang][k]) || T.en[k];
+const pick = o => o[lang] || o.en;
+const ICON = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>';
+
+// Load the selected image without displaying placeholder labels.
+function ph(src, label, cls) {
+  return `<div class="ph ${cls}" data-src="${src}" data-label="${label}"></div>`;
+}
+function hydrate(root) {
+  root.querySelectorAll('[data-src]').forEach(box => {
+    const p = new Image();
+    p.onload = () => { box.classList.add('has-img'); box.innerHTML = ''; p.alt = box.dataset.label; box.appendChild(p); };
+    p.src = box.dataset.src;
+  });
+}
+
+// Language panel shown on the home screen: 10 main languages always visible, extras expand.
+const MORE_LABEL = 'Подробнее / More languages / Басқа тілдер';
+const langBtn = c => `<button class="lbtn${c === lang ? ' on' : ''}" data-lang="${c}" lang="${c}">${ALL[c][0]}</button>`;
+function langPanel() {
+  return `<div class="langpanel" role="group" aria-label="Language">
+    <div class="langgrid">${Object.keys(MAIN).map(langBtn).join('')}</div>
+    <button class="morebtn" data-more aria-expanded="${moreOpen}">${MORE_LABEL} ${moreOpen ? '▴' : '▾'}</button>
+    <div class="langgrid extra" ${moreOpen ? '' : 'hidden'}>${Object.keys(EXTRA).map(langBtn).join('')}</div></div>`;
+}
+
+/* ===== 4. SCREENS ===== */
+const back = '<button class="backbtn" data-back>' + '</button>';
+const SCREENS = {
+  home: () => `<section class="screen home"><h1>QONAQ</h1>${ph(HERO_IMAGE,'HERO_IMAGE','r169')}
+      <p>${t('welcome')}</p>${langPanel()}<button class="btn big" data-go="places">${t('explore')}</button></section>`,
+
+  places: () => `<section class="screen">${back}<h2>${t('placesT')}</h2>${PLACES.map(card).join('')}</section>`,
+
+  place: id => {
+    const p = PLACES.find(x => x.id === id); if (!p) return SCREENS.places();
+    // To add a real map later: replace the .map block below with your map code and use p.start / p.end.
+    return `<section class="screen">${back}${ph(p.img,p.tag+'_IMAGE','r169')}
+      <h2 style="margin-top:14px">${pick(p.name)}</h2><p>${pick(p.desc)}</p>
+      <h3 style="margin:22px 0 10px">${t('where')}</h3>
+      ${ph(p.map,'','map')}
+      ${p.start.lat !== null && p.end.lat !== null ? `<div style="margin-top:10px"><span class="pin" style="position:static">📍 ${t('start')}: ${p.start.label}</span><span class="pin" style="position:static">🏁 ${t('dest')}: ${pick(p.name)}</span></div>` : ''}</section>`;
+  },
+
+  pay: id => {
+    const p = PLACES.find(x => x.id === id); if (!p) return SCREENS.places();
+    return `<section class="screen" style="text-align:center">${back}<h2>${t('payT')}</h2><h3>${pick(p.name)}</h3>
+      <div class="paybox">${ph(p.kaspi,p.kaspiLabel||'KASPI_QR_IMAGE','sq')}</div><p>${t('payI')}</p></section>`;
+  },
+
+  hotels: () => `<section class="screen">${back}<h2>${t('hotels')}</h2>${HOTELS.map(hotelCard).join('')}</section>`,
+
+  hotel: id => {
+    const h = HOTELS.find(x => x.id === id); if (!h) return SCREENS.hotels();
+    return `<section class="screen">${back}${ph(h.img,h.tag,'r169')}
+      <h2 style="margin-top:14px">${pick(h.name)}</h2>
+      <p>${pick(h.desc)}</p>${h.address ? `<p class="hint">${pick(h.address)}</p>` : ''}
+      ${h.map ? `<div style="margin-top:12px">${ph(h.map,'','map')}</div>` : ''}</section>`;
+  },
+
+  about: () => `<section class="screen">${back}<h2>${t('about')}</h2>
+      <ol class="steps">${[1,2,3,4,5].map(n => `<li>${t('s'+n)}</li>`).join('')}</ol></section>`
+};
+// Reusable attraction card: add an object to PLACES and a new card appears.
+function card(p) {
+  return `<article class="card">${ph(p.img,p.tag+'_IMAGE','r43')}<h3>${pick(p.name)}</h3><p>${pick(p.desc)}</p>
+    <div class="row"><button class="qrbtn" data-go="pay/${p.id}" aria-label="Kaspi QR">${ph(p.qr,p.tag+'_QR_IMAGE','sq')}</button>
+      <span class="hint">${t('tapqr')}</span></div>
+    <button class="btn" data-go="place/${p.id}">${t('view')}</button>
+    <button class="btn ghost" data-go="place/${p.id}">${t('how')}</button></article>`;
+}
+
+// Reusable hotel card: add an object to HOTELS and a new card appears.
+function hotelCard(h) {
+  return `<article class="card">${ph(h.img,h.tag,'r43')}<h3>${pick(h.name)}</h3>
+    
+    <p>${pick(h.desc)}</p>${h.address ? `<p class="hint">${pick(h.address)}</p>` : ''}
+    <button class="btn" data-go="hotel/${h.id}">${t('details')}</button></article>`;
+}
+
+/* ===== 5. ROUTER + BACK BUTTON ===== */
+const PARENT = { places:'home', about:'home', hotels:'home', place:'places', pay:'places', hotel:'hotels' };
+const stack = [];                       // screens visited, so Back returns to the real previous one
+function route(keep) {
+  const h = location.hash.slice(1) || 'home', [name, id] = h.split('/');
+  if (stack.length > 1 && stack[stack.length - 2] === h) stack.pop();
+  else if (stack[stack.length - 1] !== h) stack.push(h);
+  $('app').innerHTML = (SCREENS[name] || SCREENS.home)(id);
+  $('app').querySelectorAll('[data-back]').forEach(b => b.textContent = t('back'));
+  hydrate($('app')); if (!keep) window.scrollTo(0, 0);
+  document.querySelector('.lang').hidden = name === 'home';   // home has the open language panel
+}
+function goBack() {
+  if (stack.length > 1) location.hash = stack[stack.length - 2];
+  else location.hash = PARENT[(location.hash.slice(1) || 'home').split('/')[0]] || 'home';
+}
+$('app').addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'), b = e.target.closest('[data-back]');
+  const l = e.target.closest('[data-lang]'), m = e.target.closest('[data-more]');
+  if (l) setLang(l.dataset.lang);                       // language buttons on the home panel
+  else if (m) { moreOpen = !moreOpen; route(true); }    // expand / collapse extra languages
+  else if (g) location.hash = g.dataset.go; else if (b) goBack();
+});
+window.addEventListener('hashchange', () => route());
+
+/* ===== 6. LANGUAGE DROPDOWN ===== */
+function setLang(code) {
+  lang = code;
+  document.documentElement.lang = code;
+  document.documentElement.dir = ALL[code][1] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  $('langName').textContent = ALL[code][0];
+  $('langMore').textContent = $('langExtra').hidden ? t('more') : t('less');
+  document.querySelectorAll('.opt').forEach(b => b.classList.toggle('on', b.dataset.code === code));
+  try { localStorage.setItem('qonaqLang', code); } catch (e) {}   // remembered between screens and visits
+  route(true);
+}
+function buildMenu(list, box) {
+  Object.keys(list).forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'opt'; b.dataset.code = c; b.textContent = list[c][0];
+    b.onclick = () => { $('langMenu').hidden = true; setLang(c); };
+    box.appendChild(b);
+  });
+}
+buildMenu(MAIN, $('langMain')); buildMenu(EXTRA, $('langExtra'));
+$('langBtn').onclick = () => { $('langMenu').hidden = !$('langMenu').hidden; };
+$('langMore').onclick = () => { $('langExtra').hidden = !$('langExtra').hidden; $('langMore').textContent = $('langExtra').hidden ? t('more') : t('less'); };
+document.addEventListener('click', e => { if (!e.target.closest('.lang')) $('langMenu').hidden = true; });
+
+// start-up
+let saved = 'en';
+try { saved = localStorage.getItem('qonaqLang') || 'en'; } catch (e) {}
+document.querySelectorAll('[data-t]');                 // nav labels use data-t
+setLang(ALL[saved] ? saved : 'en');
