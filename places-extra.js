@@ -30,8 +30,8 @@
     'esimkhan':            ['places/esimkhan.jpg'],
     'gauhar-ana':          ['places/gauhar-ana.jpg'],
     'kumshyk-ata':         ['places/kumshyk-ata.jpg'],
-    'kuanysh-bazar':       [],
-    'altyn-orda-taxi':     []
+    'kuanysh-bazar':       ['places/kuanysh-bazar.jpg'],
+    'altyn-orda-taxi':     ['places/altyn-orda-taxi.jpg']
   };
 
   /* ---- Общие тексты ---- */
