@@ -588,11 +588,25 @@ const PLACES = [
   }
 ];
 
+/* ФОТО ОТЕЛЕЙ: реальный ID -> массив локальных путей или HTTPS-ссылок.
+   Первое фото — обложка карточки и страницы отеля, остальные — галерея.
+   Добавляйте новые фото в конец массива. Пустой [] — текстовая заглушка.
+   Сохранены существующие привязки файлов; общие фото не заменяются. */
+const HOTEL_PHOTOS = {
+  'hotel1': ['hotels/rixos.jpg'],
+  'hotel2': ['hotels/foto8.jpg'],
+  'sem-brand-hotel': ['hotels/sem-brand-hotel.jpg'],
+  'silk-way': ['hotels/silk-way.jpg'],
+  'kisva-hotel': ['hotels/kisva-hotel.jpg'],
+  'zam-zam': ['hotels/zam-zam.jpg'],
+  'city-hotel': ['hotels/city-hotel.jpg']
+};
+
 const HOTELS = [
   {
     id: 'hotel1',
     tag: 'HOTEL_IMAGE_1',
-    img: 'rix.jpg',
+    img: 'hotels/rixos.jpg',
     map: 'foto7.jpeg',
     sample: false,
     name: {
@@ -2875,6 +2889,10 @@ const QONAQ_CATALOG_HOTELS = [
 ];
 
 HOTELS.push(...QONAQ_CATALOG_HOTELS);
+HOTELS.forEach(h => {
+  h.photos = HOTEL_PHOTOS[h.id] || [];
+  h.img = h.photos[0] || '';
+});
 QONAQ_CATALOG_HOTELS.forEach(h => {
   h.googleMaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name.en + ' Turkistan Kazakhstan')}`;
   h.twoGis = `https://2gis.kz/turkistan/search/${encodeURIComponent(h.name.en)}`;
@@ -2921,10 +2939,26 @@ const formatHotelPrice = priceKzt => {
 };
 const currencyLabel = priceKzt => `${formatHotelPrice(priceKzt)} · ${currency}`;
 
+const HOTEL_PHOTO_LABELS = {
+  en: 'Photos', kk: 'Фотосуреттер', ru: 'Фотографии', tr: 'Fotoğraflar',
+  uz: 'Suratlar', ar: 'الصور', zh: '照片', ko: '사진', ja: '写真', fr: 'Photos'
+};
+
+function hotelGallery(h) {
+  const photos = h.photos.slice(1);
+  if (!photos.length) return '';
+  return `<div class="guide-section hotel-gallery" style="margin-top:20px">
+    <h3 class="guide-section-title">📷 ${HOTEL_PHOTO_LABELS[lang] || HOTEL_PHOTO_LABELS.en}</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      ${photos.map((src, n) => ph(src, pick(h.name) + ' ' + (n + 2), 'r43')).join('')}
+    </div>
+  </div>`;
+}
+
 function hotelCard(h) {
   const isCatalog = Boolean(h.facilities);
   return `<article class="card hotel-card${isCatalog ? ' catalog-hotel' : ''}">
-    ${ph(h.img, h.name.en + ' photo', 'r43')}
+    <a href="#hotel/${h.id}">${ph(h.img, pick(h.name), 'r43')}</a>
     <div class="hotel-card-content"><div class="hotel-card-kicker">${isCatalog ? qt('stay') : qt('hotel')}</div>
     <h3>${pick(h.name)}</h3><p>${pick(h.desc)}</p>
     ${addressBlock(h)}
@@ -2938,9 +2972,11 @@ SCREENS.hotel = id => { const h = HOTELS.find(x => x.id === id); if (!h) return 
 
 const renderHotelDetail = SCREENS.hotel;
 SCREENS.hotel = id => {
-  const html = renderHotelDetail(id);
+  let html = renderHotelDetail(id);
   const hotel = HOTELS.find(item => item.id === id);
-  if (!hotel || !hotel.bookingVerified || html.includes('booking-link')) return html;
+  if (!hotel) return html;
+  html = html.replace('</section>', `${hotelGallery(hotel)}</section>`);
+  if (!hotel.bookingVerified || html.includes('booking-link')) return html;
   return html.replace('</section>', `<div class="hotel-actions"><a class="btn booking-link" href="${hotel.booking}" target="_blank" rel="noopener noreferrer">${bookingUi('view')} ↗</a></div></section>`);
 };
 
