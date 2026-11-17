@@ -357,6 +357,39 @@ nav {
   }
 }
 
+/* ==========================================================================\n+   QONAQ HOTEL CATALOG\n+   ========================================================================== */
+.hotel-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:22px; }
+.hotel-intro { max-width:62ch; color:var(--ink-soft); margin-top:-8px; }
+.currency-control { display:flex; align-items:center; gap:10px; flex:0 0 auto; color:var(--deep); font:700 .82rem "Trebuchet MS",sans-serif; text-transform:uppercase; letter-spacing:.04em; }
+.currency-control select { min-width:108px; border:1px solid var(--gold-border); border-radius:var(--radius-pill); padding:10px 14px; color:var(--deep); background:var(--gold-soft); font:700 .9rem "Trebuchet MS",sans-serif; cursor:pointer; }
+.hotel-card { padding:0; overflow:hidden; display:grid; grid-template-columns:minmax(190px, 34%) 1fr; }
+.hotel-card > .media, .hotel-card > img { height:100%; min-height:220px; object-fit:cover; }
+.hotel-card-content { padding:22px 24px 24px; }
+.hotel-card-kicker { color:var(--gold); font:700 .72rem "Trebuchet MS",sans-serif; letter-spacing:.14em; text-transform:uppercase; }
+.hotel-card h3 { margin:5px 0 8px; }
+.hotel-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:16px 0; padding:10px 12px; border:1px solid var(--line-light); border-radius:var(--radius-sm); color:var(--ink-muted); font:600 .78rem "Trebuchet MS",sans-serif; }
+.hotel-meta strong, .hotel-price-large { color:var(--deep); white-space:nowrap; }
+.hotel-detail-head { display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-top:18px; }
+.hotel-detail-head h2 { margin:4px 0 0; }
+.hotel-price-large { font:700 1rem "Trebuchet MS",sans-serif; }
+.hotel-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:24px 0; }
+.hotel-detail-grid > div { background:var(--sand-light); border:1px solid var(--line-light); border-radius:var(--radius-md); padding:18px; }
+.hotel-detail-grid h3 { font-size:1rem; margin-bottom:10px; }
+.hotel-facilities { list-style:none; display:grid; gap:8px; }
+.hotel-facilities li::before { content:'✓'; color:var(--gold); font-weight:700; margin-right:8px; }
+.hotel-source { font-size:.86rem; color:var(--ink-soft); }
+.hotel-booking-note { padding:14px 16px; border-left:3px solid var(--gold); background:var(--gold-soft); color:var(--ink-soft); font-size:.9rem; }
+.hotel-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.hotel-actions .btn { margin-top:0; }
+@media (max-width: 680px) {
+  .hotel-heading, .hotel-detail-head { align-items:stretch; flex-direction:column; }
+  .currency-control { justify-content:space-between; }
+  .hotel-card { grid-template-columns:1fr; }
+  .hotel-card > .media, .hotel-card > img { min-height:190px; height:190px; }
+  .hotel-detail-grid { grid-template-columns:1fr; }
+  .hotel-actions .btn { width:100%; text-align:center; }
+}
+
 /* ==========================================================================
    LAYOUT WRAPPER (MAIN CONTENT + RIGHT-SIDE FEED)
    ========================================================================== */
@@ -414,6 +447,30 @@ nav {
   box-shadow: var(--shadow-md);
   color: #ffffff;
 }
+
+.booking-link {
+  background: #1b4f8a;
+  border-color: #1b4f8a;
+  color: #fff;
+}
+
+.booking-link:hover,
+.booking-link:focus-visible {
+  background: #153d6b;
+  border-color: #153d6b;
+  color: #fff;
+}
+
+.booking-unverified {
+  display: inline-block;
+  margin-top: .65rem;
+  color: var(--muted, #66736e);
+  font-size: .82rem;
+}
+
+.qonaq-guides-heading{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:20px}.qonaq-guides-heading h2{margin-bottom:6px}.qonaq-guides-content{min-height:160px}.qonaq-guides-state{padding:28px;border:1px dashed var(--line,#d9c9ae);border-radius:14px;color:var(--ink-soft,#60716d);text-align:center}.qonaq-guides-state.error{color:#9b2828}.qonaq-guides-filters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:18px}.qonaq-guides-filters input,.qonaq-guides-filters select,.qonaq-review-form input,.qonaq-review-form select,.qonaq-review-form textarea{box-sizing:border-box;width:100%;padding:10px;border:1px solid #d9c9ae;border-radius:9px;background:#fffdf7;color:inherit}.qonaq-guides-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.qonaq-guide-card{overflow:hidden;border:1px solid #e3d5bc;border-radius:16px;background:#fffdf7;box-shadow:0 8px 24px #173c3a0d}.qonaq-guide-photo{height:190px;background:#e7dac4}.qonaq-guide-photo img,.qonaq-guide-profile-photo img{width:100%;height:100%;object-fit:cover}.qonaq-guide-photo-placeholder{display:grid;place-items:center;height:100%;color:#b9872c;font-weight:800;letter-spacing:.12em}.qonaq-guide-card-body{padding:16px}.qonaq-guide-title-row{display:flex;justify-content:space-between;gap:8px;align-items:start}.qonaq-guide-title-row h3{margin:0}.qonaq-guide-verified{color:#8a641f;font-size:.8rem;font-weight:700}.qonaq-guide-meta,.qonaq-guide-specialty,.qonaq-guide-rating{color:var(--ink-soft,#60716d);font-size:.9rem}.qonaq-guide-card .btn{margin-top:8px}.qonaq-guide-profile{display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start}.qonaq-guide-profile-photo{height:300px;border-radius:16px;overflow:hidden;background:#e7dac4}.qonaq-guide-profile h2{margin-top:0}.qonaq-guide-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.qonaq-guide-bio,.qonaq-guide-reviews{margin-top:24px;padding-top:18px;border-top:1px solid #e3d5bc}.qonaq-guide-reviews article{padding:12px 0;border-bottom:1px solid #eadfce}.qonaq-review-form{display:grid;gap:10px;margin-top:18px;padding:16px;border-radius:14px;background:#fffdf7;border:1px solid #e3d5bc}.qonaq-form-message{color:#1b6b53}.qonaq-guides-muted{color:var(--ink-soft,#60716d)}
+@media(max-width:900px){.qonaq-guides-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.qonaq-guides-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.qonaq-guides-filters,.qonaq-guides-grid{grid-template-columns:1fr}.qonaq-guide-profile{grid-template-columns:1fr}.qonaq-guide-profile-photo{height:240px}}
 
 .btn.big {
   padding: 14px 34px;
@@ -533,6 +590,12 @@ nav {
   font-size: 0.88rem;
   color: var(--ink-muted);
 }
+
+.address-block { margin: 16px 0; padding: 14px 16px; background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: var(--radius-md); }
+.address-line { margin: 0; line-height: 1.55; }
+.address-line a { color: var(--deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+.address-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.address-link { font-size: .82rem; padding: 7px 11px; }
 
 .badge {
   display: inline-block;

@@ -1,6 +1,6 @@
 const PHOTOS = {
   'restaurant-1465': ['places/restaurant-1465.jpg'],
-  'restaurant-tary': ['places/tary.jpg'],
+  'restaurant-tary': ['places/restaurant-tary.jpg'],
   'congress-hall': ['places/congress-hall.jpg'],
   'akimat': ['places/akimat.jpg'],
   'farabi-library': ['places/farabi-library.jpg'],
@@ -12,7 +12,7 @@ const PHOTOS = {
   'rabia-sultan-begim': ['places/rabia-sultan-begim.jpg'],
   'kylwet-mosque': ['places/kylwet-mosque.jpg'],
   'sauran': ['places/sauran.jpg'],
-  'arystan-bab': ['places/arystan-bab.jpeg'],
+  'arystan-bab': ['places/arystan-bab.jpg'],
   'otrar': ['places/otrar.jpg'],
   'ukash-ata': ['places/ukash-ata.jpg'],
   'esimkhan': ['places/esimkhan.jpg'],

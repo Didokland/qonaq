@@ -1,22 +1,124 @@
-Put your own files here with these names (or edit the paths at the top of script.js):
+# 🕌 QONAQ — Smart Tourist Guide of Turkistan
 
-hero-yasawi.jpg    HERO_IMAGE        home screen photo (4:3)
-yasawi.jpg         YASAWI_IMAGE      card and place page photo
-yasawi-qr.png      YASAWI_QR_IMAGE   QR image shown on the place card (square)
-kaspi-yasawi.png   KASPI_QR_IMAGE    official Kaspi payment QR for this place (square)
-map-yasawi.png     MAP_PLACEHOLDER   map picture (optional, 4:3)
+**Discover Turkistan. Experience its history.**  
+*Түркістанды таны. Тарихты сез.*
 
-To add a place: copy the Yasawi object in the PLACES list in script.js,
-give it a new id/tag/image paths. Each place has its own Kaspi QR path.
-Missing files show a clean placeholder, never a broken image.
+QONAQ — интерактивный туристический веб-гид, созданный для знакомства с историческими, культурными и современными достопримечательностями города Туркестан.
 
---- Added in this version ---
-caravanserai.jpg          CARAVANSERAI_IMAGE      card and place page photo
-caravanserai-qr.png       CARAVANSERAI_QR_IMAGE   QR image on the place card (square)
-kaspi-caravanserai.png    KASPI_CARAVANSERAI_QR   official Kaspi QR for the caravanserai (square)
-map-caravanserai.png      MAP_PLACEHOLDER         map picture (optional)
-hotel-1.jpg, hotel-2.jpg  HOTEL_IMAGE_1 / _2      hotel photos
-hotel-map-1.png, -2.png   HOTEL_MAP_PLACEHOLDER   optional hotel map pictures
+Проект помогает туристам находить интересные места, знакомиться с их историей, просматривать фотографии и получать полезную информацию на удобном языке.
 
-To add a hotel: copy an object in the HOTELS list in script.js, set sample:false
-and fill in the real name, description and address.
+🌐 **Live Demo:** https://qonaq-jade.vercel.app/
+
+---
+
+## ✨ Возможности проекта
+
+- 🌍 **Многоязычный интерфейс** — поддержка 21 языка.
+- 🏛️ **Каталог мест** — исторические памятники, музеи, рестораны, университеты и другие объекты.
+- 🏨 **Отели** — информация о гостиницах и местах проживания.
+- 📸 **Фотогалерея** — фотографии туристических объектов.
+- 🗺️ **Карты и расположение** — информация о местоположении достопримечательностей.
+- 🎧 **Туристический гид** — знакомство с историей и культурой Туркестана.
+- 📱 **QR-код** — быстрый доступ к туристической информации.
+- 💳 **Kaspi QR** — интеграция платёжной информации.
+- 📱 **Адаптивный дизайн** — поддержка мобильных устройств и компьютеров.
+
+## 🛠️ Используемые технологии
+
+| Технология | Назначение |
+|---|---|
+| HTML5 | Структура сайта |
+| CSS3 | Дизайн и адаптивная вёрстка |
+| JavaScript | Логика и интерактивность |
+| Git & GitHub | Управление исходным кодом |
+| Vercel | Хостинг и публикация сайта |
+
+Проект разработан с использованием HTML, CSS и Vanilla JavaScript без обязательного backend-сервера и отдельной базы данных.
+
+## 📂 Структура проекта
+
+```text
+QONAQ/
+│
+├── index.html
+├── style.css
+├── script.js
+├── places-extra.js
+│
+├── places/
+│   ├── restaurant-1465.jpg
+│   ├── restaurant-tary.jpg
+│   ├── congress-hall.jpg
+│   ├── akimat.jpg
+│   ├── farabi-library.jpg
+│   └── ...
+│
+├── foto1.jpg
+├── foto2.jpg
+├── foto3.png.jpeg
+├── foto4.jpg
+│
+└── README.md
+```
+
+*Структура приведена как пример. Фактические файлы проекта могут отличаться.*
+
+## 🚀 Запуск проекта
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/USERNAME/REPOSITORY.git
+```
+
+### 2. Переход в папку проекта
+
+```bash
+cd REPOSITORY
+```
+
+### 3. Запуск
+
+Откройте `index.html` в браузере или используйте расширение Live Server в Visual Studio Code.
+
+## 🖼️ Добавление фотографий
+
+Фотографии туристических объектов хранятся в папке `places/`.
+
+Пример:
+
+```javascript
+const PHOTOS = {
+  'restaurant-1465': ['/places/restaurant-1465.jpg'],
+  'restaurant-tary': ['/places/restaurant-tary.jpg'],
+  'congress-hall': ['/places/congress-hall.jpg']
+};
+```
+
+**Важно:** фотографии необходимо загружать в GitHub вместе с исходным кодом. Имена файлов и расширения должны точно совпадать с указанными в JavaScript.
+
+## ☁️ Публикация через Vercel
+
+Проект использует автоматическое развёртывание через GitHub и Vercel.
+
+1. Загрузите проект в GitHub.
+2. Откройте [Vercel](https://vercel.com/).
+3. Импортируйте GitHub-репозиторий.
+4. Нажмите Deploy.
+5. После публикации каждый новый commit в подключённой ветке автоматически запускает обновление сайта.
+
+## 🎯 Цель проекта
+
+Главная цель QONAQ — сделать путешествие по Туркестану более удобным, понятным и доступным для туристов из разных стран.
+
+Проект объединяет туристическую информацию, культурное наследие, современные технологии и цифровые инструменты в одном веб-приложении.
+
+## 👨‍💻 Разработчик
+
+**Dinmuhammed Dulat (Didokland)**
+
+QONAQ — проект, посвящённый развитию цифрового туризма и популяризации исторического наследия Туркестана.
+
+---
+
+⭐ Если вам понравился проект, поставьте репозиторию Star на GitHub!

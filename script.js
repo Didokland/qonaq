@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    QONAQ — Official Tourism Platform (Turkistan, Kazakhstan)
    Vanilla JavaScript Application: Hash-based Multi-screen Architecture
    ========================================================================== */
@@ -11,7 +11,7 @@
    a clean, accessible "(Not configured)" badge rather than a broken link.
    ========================================================================== */
 const SOCIAL_URLS = {
-  instagram: 'https://www.instagram.com/view_iksd0/', // e.g. 'https://instagram.com/your_handle'
+  instagram: 'https://www.instagram.com/qonaq.travel.kz/', // e.g. 'https://instagram.com/your_handle'
   tiktok:    'https://www.tiktok.com/', // e.g. 'https://tiktok.com/@your_handle'
   threads:   'https://www.threads.com/', // e.g. 'https://threads.net/@your_handle'
   facebook:  'https://www.facebook.com/dinmukhamed.dulat'  // e.g. 'https://facebook.com/your_page'
@@ -520,6 +520,9 @@ const PLACES = [
     map: 'foto4.jpeg',
     start: { label: 'QONAQ banner', lat: null, lng: null },
     end: { lat: null, lng: null },
+    address: { en: 'Khoja Ahmed Yasawi Mausoleum, Turkistan', kk: 'Қожа Ахмет Ясауи кесенесі, Түркістан', ru: 'Мавзолей Ходжи Ахмеда Ясави, Туркестан', tr: 'Hoca Ahmet Yesevi Türbesi, Türkistan', uz: 'Xoja Ahmad Yassaviy maqbarasi, Turkiston', ar: 'ضريح خوجه أحمد يسوي، تركستان', zh: '霍加·艾哈迈德·亚萨维陵墓，突厥斯坦', ko: '호자 아흐메트 야사위 영묘, 투르키스탄', ja: 'ホージャ・アフマド・ヤサヴィー廟、トルキスタン', fr: 'Mausolée de Khoja Ahmed Yasawi, Turkistan' },
+    googleMaps: 'https://www.google.com/maps/search/?api=1&query=Khoja+Ahmed+Yasawi+Mausoleum+Turkistan',
+    twoGis: 'https://2gis.kz/turkistan/search/Khoja%20Ahmed%20Yasawi%20Mausoleum',
     name: {
       en: 'Khoja Ahmed Yasawi Mausoleum',
       kk: 'Қожа Ахмет Яссауи кесенесі',
@@ -555,6 +558,9 @@ const PLACES = [
     map: 'foto6.jpeg',
     start: { label: 'QONAQ banner', lat: null, lng: null },
     end: { lat: null, lng: null },
+    address: { en: 'Caravanserai, Turkistan', kk: 'Керуен-сарай, Түркістан', ru: 'Караван-сарай, Туркестан', tr: 'Kervansaray, Türkistan', uz: 'Karvonsaroy, Turkiston', ar: 'كارافانسراي، تركستان', zh: '商队驿站，突厥斯坦', ko: '캐러밴서라이, 투르키스탄', ja: 'キャラバンサライ、トルキスタン', fr: 'Caravansérail, Turkistan' },
+    googleMaps: 'https://www.google.com/maps/search/?api=1&query=Caravanserai+Turkistan',
+    twoGis: 'https://2gis.kz/turkistan/search/Caravanserai',
     name: {
       en: 'Caravanserai',
       kk: 'Керуен-сарай',
@@ -617,7 +623,9 @@ const HOTELS = [
       en: 'B. Sattarkhanov Ave 25B, Turkistan',
       kk: 'Б. Саттарханов даңғылы 25Б, Түркістан',
       ru: 'пр. Б. Саттарханова 25Б, г. Туркестан'
-    }
+    },
+    booking: 'https://www.booking.com/hotel/kz/rixos-turkistan.en-gb.html',
+    bookingVerified: true
   },
   {
     id: 'hotel2',
@@ -657,6 +665,20 @@ const HOTELS = [
   }
 ];
 
+HOTELS.forEach(h => {
+  const name = h.name.en;
+  if (h.id === 'hotel1') {
+    h.googleMaps = 'https://www.google.com/maps/search/?api=1&query=Rixos+Turkistan%2C+B.+Sattarkhanov+25B';
+    h.twoGis = 'https://2gis.kz/turkistan/search/Rixos%20Turkistan';
+  } else {
+    h.googleMaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Turkistan')}`;
+    h.twoGis = `https://2gis.kz/turkistan/search/${encodeURIComponent(name)}`;
+  }
+  const address = h.address || {};
+  ['tr', 'uz', 'ar', 'zh', 'ko', 'ja', 'fr'].forEach(locale => { if (!address[locale]) address[locale] = address.en || 'Turkistan, Kazakhstan'; });
+  h.address = address;
+});
+
 /* ==========================================================================
    5. EXTENDED MULTILINGUAL TRANSLATION SYSTEM
    --------------------------------------------------------------------------
@@ -672,7 +694,7 @@ const T = {
     travelGuide: 'Travel Guide',
     about: 'How it works',
     welcome: 'Welcome to Turkistan. Choose your language and start exploring its sacred historic sites and vibrant culture.',
-    explore: 'Explore Turkistan',
+    explore: 'Go to places',
     back: '← Back',
     view: 'View place',
     how: 'How to get there',
@@ -821,7 +843,7 @@ const T = {
     travelGuide: 'Путеводитель',
     about: 'Как это работает',
     welcome: 'Добро пожаловать в Туркестан. Выберите язык и откройте для себя духовное наследие, памятники и культуру древнего города.',
-    explore: 'Исследовать Туркестан',
+    explore: 'Перейти к местам',
     back: '← Назад',
     view: 'Открыть место',
     how: 'Как добраться',
@@ -964,7 +986,7 @@ const T = {
     travelGuide: 'Yo‘l ko‘rsatkich',
     about: 'Qanday ishlaydi',
     welcome: 'Turkistonga xush kelibsiz. Tilni tanlang va tarixiy joylarni kashf eting.',
-    explore: 'Turkistonni kashf eting',
+    explore: 'Joylarga oting',
     back: '← Orqaga',
     view: 'Joyni ko‘rish',
     how: 'Qanday borish mumkin',
@@ -1314,7 +1336,7 @@ const T = {
     travelGuide: 'Guide de voyage',
     about: 'Comment ça marche',
     welcome: 'Bienvenue à Turkestan. Choisissez votre langue et explorez ses sites sacrés et son histoire.',
-    explore: 'Explorer Turkestan',
+    explore: 'Aller aux lieux',
     back: '← Retour',
     view: 'Voir le lieu',
     how: 'Comment s’y rendre',
@@ -1421,6 +1443,32 @@ let activeFeedCategory = 'all';
 const t = k => (T[lang] && T[lang][k]) || (T.en && T.en[k]) || '';
 const pick = o => (o && (o[lang] || o.en || Object.values(o)[0])) || '';
 
+const ADDRESS_UI = {
+  en: { label: 'Address', maps: 'Open in Google Maps', gis: 'Open in 2GIS', pending: 'Location verification required' },
+  kk: { label: 'Мекенжай', maps: 'Google Maps-та ашу', gis: '2GIS-те ашу', pending: 'Орналасқан жерін тексеру қажет' },
+  ru: { label: 'Адрес', maps: 'Открыть в Google Maps', gis: 'Открыть в 2GIS', pending: 'Требуется проверка местоположения' },
+  tr: { label: 'Adres', maps: 'Google Maps’te aç', gis: '2GIS’te aç', pending: 'Konum doğrulaması gerekli' },
+  uz: { label: 'Manzil', maps: 'Google Maps’da ochish', gis: '2GIS’da ochish', pending: 'Joylashuvni tekshirish kerak' },
+  ar: { label: 'العنوان', maps: 'فتح في خرائط Google', gis: 'فتح في 2GIS', pending: 'يلزم التحقق من الموقع' },
+  zh: { label: '地址', maps: '在 Google 地图中打开', gis: '在 2GIS 中打开', pending: '需要核实位置' },
+  ko: { label: '주소', maps: 'Google 지도에서 열기', gis: '2GIS에서 열기', pending: '위치 확인 필요' },
+  ja: { label: '住所', maps: 'Google マップで開く', gis: '2GISで開く', pending: '場所の確認が必要です' },
+  fr: { label: 'Adresse', maps: 'Ouvrir dans Google Maps', gis: 'Ouvrir dans 2GIS', pending: 'Vérification du lieu requise' }
+};
+const addressUi = key => (ADDRESS_UI[lang] || ADDRESS_UI.en)[key];
+function addressBlock(item) {
+  const address = pick(item.address || item.info?.addr) || addressUi('pending');
+  const maps = item.googleMaps || item.info?.googleMaps;
+  const gis = item.twoGis || item.info?.twoGis;
+  return `<div class="address-block" aria-label="${addressUi('label')}">
+    <p class="address-line">📍 <strong>${addressUi('label')}:</strong> ${maps ? `<a href="${maps}" target="_blank" rel="noopener noreferrer">${address}</a>` : address}</p>
+    <div class="address-actions">
+      ${maps ? `<a class="btn ghost address-link" href="${maps}" target="_blank" rel="noopener noreferrer">${addressUi('maps')} ↗</a>` : ''}
+      ${gis ? `<a class="btn ghost address-link" href="${gis}" target="_blank" rel="noopener noreferrer">${addressUi('gis')} ↗</a>` : ''}
+    </div>
+  </div>`;
+}
+
 const ICON = `
 <svg viewBox="0 0 24 24">
   <rect x="3" y="4" width="18" height="16" rx="2"/>
@@ -1440,6 +1488,7 @@ const SVG_ICONS = {
    8. IMAGE PLACEHOLDERS & HYDRATION
    ========================================================================== */
 function ph(src, label, cls) {
+  if (!src) return `<div class="ph ${cls} no-photo"><span>${label}</span></div>`;
   return `
     <div class="ph ${cls}" data-src="${src}" data-label="${label}">
       ${ICON}
@@ -1490,12 +1539,51 @@ function langPanel() {
    ========================================================================== */
 const back = '<button class="backbtn" data-back></button>';
 
+/* All labels owned by the guide renderer live in the same locale switch. */
+const GUIDE_UI = {
+  en: { guideLoading:'Travel Guide content is loading...', advisoryNote:'Advisory Note', guideChapters:'Travel Guide Chapters', essentialApps:'Essential Smartphone Apps', downloadApps:'Download these before departing. Having 2GIS and Yandex Go ready on your home screen turns arriving in Kazakhstan into a smooth, effortless experience:', officialSite:'Official Site', tip:'Tip', mobileInternet:'Mobile Internet & e-SIMs', airportTaxiTrap:'The Airport Taxi Trap (Read Carefully)', taxiBenchmarks:'Standard Airport Taxi Benchmarks (August 2026)', airport:'Airport', distanceToCenter:'Distance to Center', standardAppTaxi:'Standard App Taxi', peakSurge:'Peak Surge / Storm', commonScamQuote:'Common Scam Quote', interactiveChecker:'Interactive Checker', taxiRealityChecker:'Airport Taxi Quote Reality Checker', taxiCheckerText:'Test any quoted fare from an airport driver to immediately check if it is within reasonable market range or a classic overcharge scam.', selectAirport:'Select Arrival Airport', quotedPrice:'Quoted Price in Tenge', quickPresets:'Quick Test Presets', checkFare:'Check Quoted Fare', airportBuses:'Airport Public Bus Connections', routes:'Routes', frequency:'Frequency', fare:'Fare', cashlessCards:'Cashless Dominance & Card Acceptance', physicalCash:'When You Still Need Physical Cash', exchangeTipping:'Currency Exchange & Tipping Customs', dailyCosts:'Daily Cost Estimates (August 2026)', travelStyle:'Travel Style', dailyTotal:'Daily Total', accommodation:'Accommodation', foodDining:'Food & Dining', transport:'Transport', cityTransit:'City Public Transit', intercityTrains:'Intercity Trains: High-Speed Talgo & Soviet Classics', domesticAviation:'Domestic Aviation: Spanning the Steppe', driving4wd:'Highway Driving & 4WD Requirements', distanceTable:'Intercity Distance & Transit Times Table', routeCorridor:'Route Corridor', distance:'Distance', flightDuration:'Flight Duration', trainTalgo:'Train (Talgo)', roadHighway:'Road / Highway', keyHighlights:'Key Highlights', localTip:'Local Insider Tip', certifiedGuide:'Looking for a certified guide in Turkestan?', guideProfileText:'Meet our licensed historian-guide Alisher Nurpeisov for tailored UNESCO tours.', viewGuideProfile:'View Guide Profile', idealFor:'Ideal for', returnToTop:'Return to Top' },
+  ru: { guideLoading:'Путеводитель загружается…', advisoryNote:'Редакционное примечание', guideChapters:'Главы путеводителя', essentialApps:'Необходимые приложения', downloadApps:'Загрузите их до вылета. 2GIS и Yandex Go на главном экране сделают прибытие в Казахстан спокойным и простым:', officialSite:'Официальный сайт', tip:'Совет', mobileInternet:'Мобильный интернет и eSIM', airportTaxiTrap:'Ловушка с такси в аэропорту (внимание)', taxiBenchmarks:'Ориентиры стоимости такси из аэропорта (август 2026)', airport:'Аэропорт', distanceToCenter:'Расстояние до центра', standardAppTaxi:'Такси через приложение', peakSurge:'Пиковая цена / непогода', commonScamQuote:'Типичная цена мошенников', interactiveChecker:'Интерактивная проверка', taxiRealityChecker:'Проверка цены такси из аэропорта', taxiCheckerText:'Введите цену, которую назвал водитель, чтобы проверить её по обычному рыночному диапазону и выявить переплату.', selectAirport:'Выберите аэропорт прибытия', quotedPrice:'Названная цена в тенге', quickPresets:'Быстрые примеры', checkFare:'Проверить цену', airportBuses:'Автобусы из аэропорта', routes:'Маршруты', frequency:'Интервал', fare:'Стоимость', cashlessCards:'Безналичная оплата и карты', physicalCash:'Когда нужны наличные', exchangeTipping:'Обмен валюты и чаевые', dailyCosts:'Оценка расходов в день (август 2026)', travelStyle:'Стиль поездки', dailyTotal:'Итого в день', accommodation:'Проживание', foodDining:'Еда', transport:'Транспорт', cityTransit:'Городской транспорт', intercityTrains:'Междугородние поезда: Talgo и классические составы', domesticAviation:'Внутренние авиарейсы по степи', driving4wd:'Дороги и требования к 4WD', distanceTable:'Расстояния и время в пути', routeCorridor:'Маршрут', distance:'Расстояние', flightDuration:'Перелёт', trainTalgo:'Поезд (Talgo)', roadHighway:'Автомобиль', keyHighlights:'Главные места', localTip:'Совет местного жителя', certifiedGuide:'Ищете сертифицированного гида в Туркестане?', guideProfileText:'Познакомьтесь с лицензированным историком-гидом Алишером Нурпеисовым для индивидуальных туров ЮНЕСКО.', viewGuideProfile:'Профиль гида', idealFor:'Подходит для', returnToTop:'Наверх' },
+  kk: { guideLoading:'Жолсілтеме жүктелуде…', advisoryNote:'Редакциялық ескерту', guideChapters:'Жолсілтеме тараулары', essentialApps:'Қажетті смартфон қосымшалары', downloadApps:'Оларды жолға шығар алдында жүктеп алыңыз. 2GIS пен Yandex Go қолданбаларын басты экранға шығару Қазақстанға келуді жеңілдетеді:', officialSite:'Ресми сайт', tip:'Кеңес', mobileInternet:'Мобильді интернет және eSIM', airportTaxiTrap:'Әуежайдағы такси тұзағы (мұқият оқыңыз)', taxiBenchmarks:'Әуежай такси бағасының бағдарлары (2026 жылғы тамыз)', airport:'Әуежай', distanceToCenter:'Орталыққа дейінгі қашықтық', standardAppTaxi:'Қосымшадағы такси', peakSurge:'Шарықтау / дауыл бағасы', commonScamQuote:'Алаяқтар айтатын баға', interactiveChecker:'Интерактивті тексеру', taxiRealityChecker:'Әуежай такси бағасын тексеру', taxiCheckerText:'Жүргізуші айтқан бағаны енгізіп, оның нарықтағы қалыпты мөлшерге сай екенін және артық төлем болуы мүмкін екенін тексеріңіз.', selectAirport:'Келу әуежайын таңдаңыз', quotedPrice:'Айтылған баға (теңге)', quickPresets:'Жылдам мысалдар', checkFare:'Бағаны тексеру', airportBuses:'Әуежай автобустары', routes:'Бағыттар', frequency:'Аралық', fare:'Жолақы', cashlessCards:'Қолма-қол ақшасыз төлем және карталар', physicalCash:'Қолма-қол ақша қажет болатын кездер', exchangeTipping:'Валюта айырбастау және шайпұл', dailyCosts:'Күнделікті шығындар (2026 жылғы тамыз)', travelStyle:'Саяхат стилі', dailyTotal:'Күндік жалпы сома', accommodation:'Тұру орны', foodDining:'Тамақ', transport:'Көлік', cityTransit:'Қалалық көлік', intercityTrains:'Қалааралық пойыздар: Talgo және классикалық пойыздар', domesticAviation:'Дала үстіндегі ішкі әуе рейстері', driving4wd:'Жолдар және 4WD талаптары', distanceTable:'Қашықтық пен жол уақыты', routeCorridor:'Бағыт', distance:'Қашықтық', flightDuration:'Ұшу уақыты', trainTalgo:'Пойыз (Talgo)', roadHighway:'Автожол', keyHighlights:'Негізгі орындар', localTip:'Жергілікті тұрғын кеңесі', certifiedGuide:'Түркістаннан сертификатталған гид іздеп жүрсіз бе?', guideProfileText:'ЮНЕСКО бойынша жеке тур үшін лицензиялы тарихшы-гид Әлішер Нұрпейісовпен танысыңыз.', viewGuideProfile:'Гид профилі', idealFor:'Кімге лайық', returnToTop:'Жоғарыға' },
+  tr: { guideLoading:'Seyahat rehberi yükleniyor…', advisoryNote:'Editör notu', guideChapters:'Seyahat rehberi bölümleri', essentialApps:'Gerekli akıllı telefon uygulamaları', downloadApps:'Bunları yola çıkmadan indirin. 2GIS ve Yandex Go’yu ana ekrana almak Kazakistan’a varışı kolaylaştırır:', officialSite:'Resmî site', tip:'İpucu', mobileInternet:'Mobil internet ve eSIM', airportTaxiTrap:'Havalimanı taksi tuzağı (dikkatle okuyun)', taxiBenchmarks:'Havalimanı taksi ücretleri için ölçütler (Ağustos 2026)', airport:'Havalimanı', distanceToCenter:'Merkeze mesafe', standardAppTaxi:'Uygulama taksisi', peakSurge:'Yoğunluk / fırtına ücreti', commonScamQuote:'Yaygın dolandırıcılık ücreti', interactiveChecker:'Etkileşimli kontrol', taxiRealityChecker:'Havalimanı taksi fiyatı kontrolü', taxiCheckerText:'Sürücünün söylediği ücreti test ederek makul piyasa aralığında olup olmadığını ve klasik bir aşırı ücretlendirme ihtimalini görün.', selectAirport:'Varış havalimanını seçin', quotedPrice:'Söylenen fiyat (tenge)', quickPresets:'Hızlı örnekler', checkFare:'Ücreti kontrol et', airportBuses:'Havalimanı otobüsleri', routes:'Rotalar', frequency:'Sıklık', fare:'Ücret', cashlessCards:'Nakit kullanmadan ödeme ve kartlar', physicalCash:'Nakit paraya ihtiyaç duyulan durumlar', exchangeTipping:'Döviz bozdurma ve bahşiş', dailyCosts:'Günlük maliyet tahminleri (Ağustos 2026)', travelStyle:'Seyahat tarzı', dailyTotal:'Günlük toplam', accommodation:'Konaklama', foodDining:'Yeme içme', transport:'Ulaşım', cityTransit:'Şehir içi ulaşım', intercityTrains:'Şehirlerarası trenler: Talgo ve klasik trenler', domesticAviation:'Bozkır boyunca iç hat uçuşları', driving4wd:'Karayolları ve 4WD gereklilikleri', distanceTable:'Şehirlerarası mesafe ve süre tablosu', routeCorridor:'Güzergâh', distance:'Mesafe', flightDuration:'Uçuş süresi', trainTalgo:'Tren (Talgo)', roadHighway:'Karayolu', keyHighlights:'Öne çıkanlar', localTip:'Yerel öneri', certifiedGuide:'Türkistan’da sertifikalı rehber mi arıyorsunuz?', guideProfileText:'Özel UNESCO turları için lisanslı tarihçi-rehber Alisher Nurpeisov ile tanışın.', viewGuideProfile:'Rehber profilini gör', idealFor:'Şunun için ideal', returnToTop:'Başa dön' }
+};
+const gt = key => (GUIDE_UI[lang] || GUIDE_UI.en)[key] || GUIDE_UI.en[key] || key;
+const GUIDE_WIDGET_UI = {
+  en: { tenge:'Tenge', dollar:'US Dollar', euro:'Euro', dirham:'UAE Dirham', amount:'Amount to Convert', base:'Base Currency', editable:'Editable Rates (1 Foreign Unit = KZT)', fair:'Fair & Standard Price', elevated:'Elevated Fare / Surge Conditions', extreme:'Extreme Airport Taxi Scam Alert!', fairAstana:'Fair & Standard Price', highAstana:'High Overcharge Warning', liveConverter:'Kazakhstani Tenge (KZT) Live Converter', converterHelp:'Convert between Tenge and major international currencies. Exchange rates can be customized to match today’s live bureau rate.', interactiveTool:'Interactive Tool', fairPreset:'Fair', surgePreset:'Surge', scamPreset:'Scam', disclaimer:'Disclaimer: Estimates are illustrative benchmarks. Live fares vary with weather, traffic, and vehicle tier.' },
+  ru: { tenge:'Тенге', dollar:'Доллар США', euro:'Евро', dirham:'Дирхам ОАЭ', amount:'Сумма для конвертации', base:'Исходная валюта', editable:'Редактируемые курсы (1 иностранная единица = KZT)', fair:'Справедливая стандартная цена', elevated:'Повышенная цена / пик спроса', extreme:'Предупреждение: крайне завышенная цена такси!', fairAstana:'Справедливая стандартная цена', highAstana:'Предупреждение о переплате', liveConverter:'Конвертер казахстанского тенге (KZT)', converterHelp:'Конвертируйте тенге в основные валюты. Курсы можно изменить в соответствии с актуальным курсом обменного пункта.', interactiveTool:'Интерактивный инструмент', fairPreset:'Норма', surgePreset:'Пик', scamPreset:'Мошенничество', disclaimer:'Примечание: это ориентиры. Фактическая цена зависит от погоды, трафика и класса автомобиля.' },
+  kk: { tenge:'Теңге', dollar:'АҚШ доллары', euro:'Еуро', dirham:'БАӘ дирхамы', amount:'Айырбасталатын сома', base:'Негізгі валюта', editable:'Өзгертілетін бағамдар (1 шетел валютасы = KZT)', fair:'Әділ стандартты баға', elevated:'Жоғары баға / сұраныс шыңы', extreme:'Әуежай таксиі өте қымбат: ескерту!', fairAstana:'Әділ стандартты баға', highAstana:'Артық төлем туралы ескерту', liveConverter:'Қазақстан теңгесінің (KZT) конвертері', converterHelp:'Теңгені негізгі халықаралық валюталарға айырбастаңыз. Бағамдарды бүгінгі айырбастау пунктінің бағамына сай өзгертуге болады.', interactiveTool:'Интерактивті құрал', fairPreset:'Қалыпты', surgePreset:'Шарықтау', scamPreset:'Алаяқтық', disclaimer:'Ескерту: бұл бағдарлы есеп. Нақты баға ауа райына, көлікке және тарифке байланысты өзгереді.' },
+  tr: { tenge:'Tenge', dollar:'ABD doları', euro:'Euro', dirham:'BAE dirhemi', amount:'Dönüştürülecek tutar', base:'Temel para birimi', editable:'Düzenlenebilir kurlar (1 yabancı birim = KZT)', fair:'Uygun ve standart fiyat', elevated:'Yüksek ücret / yoğunluk koşulu', extreme:'Aşırı havalimanı taksi ücreti uyarısı!', fairAstana:'Uygun ve standart fiyat', highAstana:'Yüksek ücret uyarısı', liveConverter:'Kazakistan Tengesi (KZT) canlı dönüştürücü', converterHelp:'Tenge ile başlıca uluslararası para birimleri arasında dönüşüm yapın. Kurlar güncel döviz bürosu oranına göre değiştirilebilir.', interactiveTool:'Etkileşimli araç', fairPreset:'Uygun', surgePreset:'Yoğunluk', scamPreset:'Dolandırıcılık', disclaimer:'Not: Bunlar yaklaşık ölçütlerdir. Gerçek ücret hava, trafik ve araç sınıfına göre değişir.' }
+};
+const gw = key => (GUIDE_WIDGET_UI[lang] || GUIDE_WIDGET_UI.en)[key] || GUIDE_WIDGET_UI.en[key] || key;
+const taxiVerdictText = (kind, fare) => {
+  const f = Number(fare).toLocaleString();
+  const text = {
+    en: { fairA:`Your quote of ${f} ₸ is within the usual Yandex Go Economy/Comfort range (~3,500–5,500 ₸ / $7–$11) to central Almaty. This is a fair rate.`, elevatedA:`Your quote of ${f} ₸ is about 1.5–2× the standard economy rate. It may be normal for Comfort+ or winter/Friday peak traffic, but it is above the usual base price.`, scamA:`Your quote of ${f} ₸ is far above market value. Unofficial drivers at Almaty Airport may ask 15,000–50,000 ₸. Do not take this ride; order Yandex Go on airport Wi‑Fi or use the official taxi counter.`, fairN:`Your quote of ${f} ₸ matches normal Yandex Go rates (~3,000–4,500 ₸ / $6–$9) from Astana Airport to the Left Bank.`, elevatedN:`Your quote of ${f} ₸ is above the normal off-peak fare (~3,500 ₸), but can be reasonable in severe winter weather or Comfort+ class.`, scamN:`Your quote of ${f} ₸ is an overcharge. Terminal solicitors may ask 15,000–35,000 ₸. Use Yandex Go on airport Wi‑Fi or the official dispatch desk.` },
+    ru: { fairA:`Цена ${f} ₸ соответствует обычному тарифу Yandex Go Эконом/Комфорт (~3 500–5 500 ₸ / $7–11) до центра Алматы. Это нормальная цена.`, elevatedA:`Цена ${f} ₸ примерно в 1,5–2 раза выше обычного тарифа. Это возможно для Comfort+ или в снегопад и час пик, но выше базового уровня.`, scamA:`Цена ${f} ₸ значительно выше рынка. Нелегальные водители в аэропорту Алматы могут просить 15 000–50 000 ₸. Не садитесь в машину: закажите Yandex Go через Wi‑Fi или обратитесь в официальную стойку такси.`, fairN:`Цена ${f} ₸ соответствует обычному тарифу Yandex Go (~3 000–4 500 ₸ / $6–9) из аэропорта Астаны на левый берег.`, elevatedN:`Цена ${f} ₸ выше обычного тарифа вне пика (~3 500 ₸), но может быть оправдана метелью или классом Comfort+.`, scamN:`Цена ${f} ₸ завышена. У терминала могут просить 15 000–35 000 ₸. Используйте Yandex Go через Wi‑Fi или официальную диспетчерскую.` },
+    kk: { fairA:`${f} ₸ бағасы Алматы орталығына дейінгі Yandex Go Эконом/Комфорт әдеттегі аралығына (~3 500–5 500 ₸ / $7–11) сай. Бұл әділ баға.`, elevatedA:`${f} ₸ бағасы қалыпты эконом тарифінен шамамен 1,5–2 есе жоғары. Comfort+ немесе қысқы/жұма күнгі қарбалас кезінде болуы мүмкін, бірақ базалық бағадан қымбат.`, scamA:`${f} ₸ бағасы нарықтан әлдеқайда жоғары. Алматы әуежайындағы бейресми жүргізушілер 15 000–50 000 ₸ сұрауы мүмкін. Отырмаңыз: Wi‑Fi арқылы Yandex Go шақырыңыз немесе ресми такси орнына барыңыз.`, fairN:`${f} ₸ бағасы Астана әуежайынан Сол жағалауға дейінгі қалыпты Yandex Go тарифіне (~3 000–4 500 ₸ / $6–9) сай.`, elevatedN:`${f} ₸ бағасы қарбалас емес уақыттағы қалыпты бағадан (~3 500 ₸) жоғары, бірақ қатты боранда немесе Comfort+ класында орынды болуы мүмкін.`, scamN:`${f} ₸ бағасы тым жоғары. Терминалдағы делдалдар 15 000–35 000 ₸ сұрауы мүмкін. Wi‑Fi арқылы Yandex Go немесе ресми диспетчерді пайдаланыңыз.` },
+    tr: { fairA:`${f} ₸ ücret, Almatı merkezine normal Yandex Go Ekonomi/Konfor aralığına (~3.500–5.500 ₸ / 7–11 $) uygundur. Bu makul bir fiyattır.`, elevatedA:`${f} ₸ ücret, standart ekonominin yaklaşık 1,5–2 katıdır. Konfor+ veya kış/ cuma yoğunluğu bunu açıklayabilir; yine de temel ücretten yüksektir.`, scamA:`${f} ₸ ücret piyasanın çok üzerindedir. Almatı Havalimanı’ndaki gayriresmî sürücüler 15.000–50.000 ₸ isteyebilir. Binmeyin; Wi‑Fi üzerinden Yandex Go çağırın veya resmî taksi gişesini kullanın.`, fairN:`${f} ₸ ücret, Astana Havalimanı’ndan Sol Yaka’ya normal Yandex Go aralığına (~3.000–4.500 ₸ / 6–9 $) uygundur.`, elevatedN:`${f} ₸ ücret, yoğun olmayan normal fiyattan (~3.500 ₸) yüksektir; şiddetli kış fırtınasında veya Konfor+ sınıfında makul olabilir.`, scamN:`${f} ₸ ücret aşırıdır. Terminaldeki aracılar 15.000–35.000 ₸ isteyebilir. Havalimanı Wi‑Fi’si üzerinden Yandex Go’yu veya resmî görevlendirme masasını kullanın.` }
+  };
+  return text[lang]?.[kind] || text.en[kind];
+};
+Object.assign(GUIDE_WIDGET_UI.en, { airportAlmaty:'Almaty International (ALA) → City Center', airportAstana:'Astana Nursultan Nazarbayev (NQZ) → Left Bank', kztOption:'KZT (₸ - Kazakhstani Tenge)', usdOption:'USD ($ - US Dollar)', eurOption:'EUR (€ - Euro)', aedOption:'AED (د.إ - UAE Dirham)' });
+Object.assign(GUIDE_WIDGET_UI.ru, { airportAlmaty:'Международный аэропорт Алматы (ALA) → центр', airportAstana:'Аэропорт Астаны (NQZ) → левый берег', kztOption:'KZT (₸ — казахстанский тенге)', usdOption:'USD ($ — доллар США)', eurOption:'EUR (€ — евро)', aedOption:'AED (د.إ — дирхам ОАЭ)' });
+Object.assign(GUIDE_WIDGET_UI.kk, { airportAlmaty:'Алматы халықаралық әуежайы (ALA) → қала орталығы', airportAstana:'Астана Нұрсұлтан Назарбаев әуежайы (NQZ) → Сол жағалау', kztOption:'KZT (₸ — Қазақстан теңгесі)', usdOption:'USD ($ — АҚШ доллары)', eurOption:'EUR (€ — еуро)', aedOption:'AED (د.إ — БАӘ дирхамы)' });
+Object.assign(GUIDE_WIDGET_UI.tr, { airportAlmaty:'Almatı Uluslararası (ALA) → şehir merkezi', airportAstana:'Astana Nursultan Nazarbayev (NQZ) → Sol Yaka', kztOption:'KZT (₸ - Kazakistan Tengesi)', usdOption:'USD ($ - ABD doları)', eurOption:'EUR (€ - Euro)', aedOption:'AED (د.إ - BAE dirhemi)' });
+
+function localizeGuideData(value) {
+  if (Array.isArray(value)) return value.map(localizeGuideData);
+  if (!value || typeof value !== 'object') return value;
+  if (Object.prototype.hasOwnProperty.call(value, 'en') && Object.keys(value).some(code => ['kk', 'ru', 'tr', 'uz', 'ar', 'zh', 'ko', 'ja', 'fr'].includes(code))) {
+    return value[lang] || value.en;
+  }
+  return Object.fromEntries(Object.entries(value).filter(([key]) => key !== '__qonaqCore').map(([key, child]) => [key, localizeGuideData(child)]));
+}
+
 
 /* ==========================================================================
    EDITORIAL TRAVEL GUIDE RENDERING & INTERACTIVE WIDGETS
    ========================================================================== */
 function renderTravelGuide(activeChapterId) {
-  const g = typeof KAZAKHSTAN_TRAVEL_GUIDE !== 'undefined'
+  let g = typeof KAZAKHSTAN_TRAVEL_GUIDE !== 'undefined'
     ? KAZAKHSTAN_TRAVEL_GUIDE
     : (typeof window !== 'undefined' && window.KAZAKHSTAN_TRAVEL_GUIDE ? window.KAZAKHSTAN_TRAVEL_GUIDE : null);
   if (!g) {
@@ -1503,9 +1591,12 @@ function renderTravelGuide(activeChapterId) {
       <section class="screen">
         ${back}
         <h2>${t('guide')}</h2>
-        <p>Travel Guide content is loading...</p>
+        <p>${gt('guideLoading')}</p>
       </section>`;
   }
+
+  g = localizeGuideData(g);
+  localizeGuideCore(g);
 
   return `
     <article class="screen guide-article-wrap" id="travelGuideTop">
@@ -1517,7 +1608,7 @@ function renderTravelGuide(activeChapterId) {
         <h1 class="guide-hero-title">${g.meta.heroTitle}</h1>
         <p class="guide-hero-subtitle">${g.meta.heroSubtitle}</p>
         <div class="guide-advisory-alert">
-          <strong>ℹ️ Advisory Note:</strong> ${g.meta.advisoryNotice}
+          <strong>ℹ️ ${gt('advisoryNote')}:</strong> ${g.meta.advisoryNotice}
         </div>
       </header>
 
@@ -1542,7 +1633,7 @@ function renderTravelGuide(activeChapterId) {
       </section>
 
       <!-- Sticky Chapter Navigation Menu -->
-      <nav class="guide-toc-nav" aria-label="Travel Guide Chapters">
+      <nav class="guide-toc-nav" aria-label="${gt('guideChapters')} ">
         <div class="guide-toc-scroll">
           ${g.chapters.map(ch => `
             <a href="#travel-guide/${ch.id}" class="guide-toc-pill${activeChapterId === ch.id ? ' active' : ''}" data-ch="${ch.id}">
@@ -1560,24 +1651,24 @@ function renderTravelGuide(activeChapterId) {
           <p class="guide-ch-summary">${g.chapters[0].summary}</p>
         </div>
 
-        <h3 class="guide-subheading">📱 Essential Smartphone Apps</h3>
-        <p class="guide-p">Download these before departing. Having 2GIS and Yandex Go ready on your home screen turns arriving in Kazakhstan into a smooth, effortless experience:</p>
+        <h3 class="guide-subheading">📱 ${gt('essentialApps')}</h3>
+        <p class="guide-p">${gt('downloadApps')}</p>
 
         <div class="guide-apps-grid">
           ${g.chapters[0].contentSections[0].items.map(app => `
             <div class="guide-app-card">
               <div class="guide-app-top">
                 <span class="guide-app-cat">${app.category}</span>
-                ${app.url ? `<a href="${app.url}" target="_blank" rel="noopener noreferrer" class="guide-app-link">Official Site ↗</a>` : ''}
+                ${app.url ? `<a href="${app.url}" target="_blank" rel="noopener noreferrer" class="guide-app-link">${gt('officialSite')} ↗</a>` : ''}
               </div>
               <h4 class="guide-app-name">${app.name}</h4>
               <p class="guide-app-desc">${app.desc}</p>
-              ${app.tip ? `<div class="guide-app-tip">💡 <strong>Tip:</strong> ${app.tip}</div>` : ''}
+              ${app.tip ? `<div class="guide-app-tip">💡 <strong>${gt('tip')}:</strong> ${app.tip}</div>` : ''}
             </div>
           `).join('')}
         </div>
 
-        <h3 class="guide-subheading">📶 Mobile Internet & e-SIMs</h3>
+        <h3 class="guide-subheading">📶 ${gt('mobileInternet')}</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-bottom:18px;">
           ${g.chapters[0].contentSections[1].options.map(opt => `
             <div style="background:var(--sand-light);border:1px solid var(--line);border-radius:var(--radius-md);padding:16px;">
@@ -1601,22 +1692,22 @@ function renderTravelGuide(activeChapterId) {
           <p class="guide-ch-summary">${g.chapters[1].summary}</p>
         </div>
 
-        <h3 class="guide-subheading">🚨 The Airport Taxi Trap (Read Carefully)</h3>
+        <h3 class="guide-subheading">🚨 ${gt('airportTaxiTrap')}</h3>
         <p class="guide-p">${g.chapters[1].contentSections[0].text}</p>
         <ul style="margin:12px 0 20px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[1].contentSections[0].warnings.map(w => `<li style="margin-bottom:6px;">${w}</li>`).join('')}
         </ul>
 
-        <h3 class="guide-subheading">📊 Standard Airport Taxi Benchmarks (August 2026)</h3>
+        <h3 class="guide-subheading">📊 ${gt('taxiBenchmarks')}</h3>
         <div class="guide-data-table-wrap">
           <table class="guide-data-table">
             <thead>
               <tr>
-                <th>Airport</th>
-                <th>Distance to Center</th>
-                <th>Standard App Taxi</th>
-                <th>Peak Surge / Storm</th>
-                <th>Common Scam Quote</th>
+                <th>${gt('airport')}</th>
+                <th>${gt('distanceToCenter')}</th>
+                <th>${gt('standardAppTaxi')}</th>
+                <th>${gt('peakSurge')}</th>
+                <th>${gt('commonScamQuote')}</th>
               </tr>
             </thead>
             <tbody>
@@ -1635,51 +1726,51 @@ function renderTravelGuide(activeChapterId) {
 
         <!-- Interactive Taxi Quote Checker Tool -->
         <div class="tool-widget-card" id="taxiQuoteWidget">
-          <div class="tool-widget-badge">Interactive Checker</div>
-          <h4>🚕 Airport Taxi Quote Reality Checker</h4>
-          <p class="guide-p" style="margin-bottom:16px;">Test any quoted fare from an airport driver to immediately check if it is within reasonable market range or a classic overcharge scam.</p>
+          <div class="tool-widget-badge">${gt('interactiveChecker')}</div>
+          <h4>🚕 ${gt('taxiRealityChecker')}</h4>
+          <p class="guide-p" style="margin-bottom:16px;">${gt('taxiCheckerText')}</p>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px;margin-bottom:12px;">
             <div class="tool-input-group">
-              <label for="taxiAirportSelect">Select Arrival Airport:</label>
+              <label for="taxiAirportSelect">${gt('selectAirport')}:</label>
               <select id="taxiAirportSelect">
-                <option value="ALA" selected>Almaty International (ALA) → City Center</option>
-                <option value="NQZ">Astana Nursultan Nazarbayev (NQZ) → Left Bank</option>
+                <option value="ALA" selected>${gw('airportAlmaty')}</option>
+                <option value="NQZ">${gw('airportAstana')}</option>
               </select>
             </div>
             <div class="tool-input-group">
-              <label for="taxiFareInput">Quoted Price in Tenge (₸):</label>
+              <label for="taxiFareInput">${gt('quotedPrice')} (₸):</label>
               <input type="number" id="taxiFareInput" value="5000" min="0" step="500" placeholder="e.g. 5000">
             </div>
           </div>
 
           <div class="quick-presets">
-            <span style="font-size:0.8rem;color:var(--ink-muted);font-weight:600">Quick Test Presets:</span>
-            <button type="button" class="preset-btn" data-preset="4500">4,500 ₸ (Fair)</button>
-            <button type="button" class="preset-btn" data-preset="8000">8,000 ₸ (Surge)</button>
-            <button type="button" class="preset-btn" data-preset="25000">25,000 ₸ (Scam)</button>
-            <button type="button" class="preset-btn" data-preset="50000">50,000 ₸ (Scam)</button>
+            <span style="font-size:0.8rem;color:var(--ink-muted);font-weight:600">${gt('quickPresets')}:</span>
+            <button type="button" class="preset-btn" data-preset="4500">4,500 ₸ (${gw('fairPreset')})</button>
+            <button type="button" class="preset-btn" data-preset="8000">8,000 ₸ (${gw('surgePreset')})</button>
+            <button type="button" class="preset-btn" data-preset="25000">25,000 ₸ (${gw('scamPreset')})</button>
+            <button type="button" class="preset-btn" data-preset="50000">50,000 ₸ (${gw('scamPreset')})</button>
           </div>
 
           <button type="button" class="btn" id="checkTaxiQuoteBtn">
-            🔍 Check Quoted Fare
+            🔍 ${gt('checkFare')}
           </button>
 
           <div id="taxiQuoteVerdictBox" class="taxi-verdict-box" style="margin-top:16px;"></div>
 
           <p style="margin-top:12px;font-size:0.78rem;color:var(--ink-muted);line-height:1.4;">
-            ℹ️ <em>Disclaimer: Estimates are illustrative benchmarks based on August 2026 Yandex Go averages. Live fares vary with real-time weather, traffic, and vehicle tier. This does not constitute a guaranteed fare.</em>
+            ℹ️ <em>${gw('disclaimer')}</em>
           </p>
         </div>
 
-        <h3 class="guide-subheading">🚌 Airport Public Bus Connections</h3>
+        <h3 class="guide-subheading">🚌 ${gt('airportBuses')}</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-bottom:18px;">
           ${g.chapters[1].contentSections[2].buses.map(bus => `
             <div style="background:var(--sand-light);border:1px solid var(--line);border-radius:var(--radius-md);padding:16px;">
               <h5 style="color:var(--deep);font-weight:700;margin-bottom:4px;">${bus.city}</h5>
-              <p style="color:var(--ink);font-size:0.9rem;margin-bottom:6px;"><strong>Routes:</strong> ${bus.routes}</p>
-              <p style="color:var(--ink-soft);font-size:0.85rem;margin-bottom:4px;"><strong>Frequency:</strong> ${bus.frequency}</p>
-              <p style="color:#1e7e43;font-size:0.85rem;font-weight:700;"><strong>Fare:</strong> ${bus.fare}</p>
+              <p style="color:var(--ink);font-size:0.9rem;margin-bottom:6px;"><strong>${gt('routes')}:</strong> ${bus.routes}</p>
+              <p style="color:var(--ink-soft);font-size:0.85rem;margin-bottom:4px;"><strong>${gt('frequency')}:</strong> ${bus.frequency}</p>
+              <p style="color:#1e7e43;font-size:0.85rem;font-weight:700;"><strong>${gt('fare')}:</strong> ${bus.fare}</p>
             </div>
           `).join('')}
         </div>
@@ -1698,19 +1789,19 @@ function renderTravelGuide(activeChapterId) {
           <p class="guide-ch-summary">${g.chapters[2].summary}</p>
         </div>
 
-        <h3 class="guide-subheading">💳 Cashless Dominance & Card Acceptance</h3>
+        <h3 class="guide-subheading">💳 ${gt('cashlessCards')}</h3>
         <p class="guide-p">${g.chapters[2].contentSections[0].text}</p>
         <ul style="margin:10px 0 20px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[2].contentSections[0].points.map(p => `<li>${p}</li>`).join('')}
         </ul>
 
-        <h3 class="guide-subheading">💵 When You Still Need Physical Cash</h3>
+        <h3 class="guide-subheading">💵 ${gt('physicalCash')}</h3>
         <p class="guide-p">${g.chapters[2].contentSections[1].text}</p>
         <ul style="margin:10px 0 20px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[2].contentSections[1].cashScenarios.map(s => `<li>${s}</li>`).join('')}
         </ul>
 
-        <h3 class="guide-subheading">💱 Currency Exchange & Tipping Customs</h3>
+        <h3 class="guide-subheading">💱 ${gt('exchangeTipping')}</h3>
         <p class="guide-p">${g.chapters[2].contentSections[2].text}</p>
         <ul style="margin:10px 0 16px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[2].contentSections[2].tips.map(t => `<li>${t}</li>`).join('')}
@@ -1719,28 +1810,28 @@ function renderTravelGuide(activeChapterId) {
 
         <!-- Interactive Tenge Currency Converter Tool -->
         <div class="tool-widget-card" id="currencyConverterWidget">
-          <div class="tool-widget-badge">Interactive Tool</div>
-          <h4>₸ Kazakhstani Tenge (KZT) Live Converter</h4>
-          <p class="guide-p" style="margin-bottom:16px;">Convert between Tenge and major international currencies. Exchange rates can be customized to match today’s live bureau rate.</p>
+          <div class="tool-widget-badge">${gw('interactiveTool')}</div>
+          <h4>₸ ${gw('liveConverter')}</h4>
+          <p class="guide-p" style="margin-bottom:16px;">${gw('converterHelp')}</p>
 
           <div class="converter-inputs-row">
             <div class="tool-input-group">
-              <label for="converterAmount">Amount to Convert:</label>
+              <label for="converterAmount">${gw('amount')}:</label>
               <input type="number" id="converterAmount" value="10000" min="0" step="any">
             </div>
             <div class="tool-input-group">
-              <label for="converterBase">Base Currency:</label>
+              <label for="converterBase">${gw('base')}:</label>
               <select id="converterBase">
-                <option value="KZT" selected>KZT (₸ - Kazakhstani Tenge)</option>
-                <option value="USD">USD ($ - US Dollar)</option>
-                <option value="EUR">EUR (€ - Euro)</option>
-                <option value="AED">AED (د.إ - UAE Dirham)</option>
+                <option value="KZT" selected>${gw('kztOption')}</option>
+                <option value="USD">${gw('usdOption')}</option>
+                <option value="EUR">${gw('eurOption')}</option>
+                <option value="AED">${gw('aedOption')}</option>
               </select>
             </div>
           </div>
 
           <div class="converter-rates-bar">
-            <span style="font-weight:700;font-size:0.82rem;color:var(--deep)">Editable Rates (1 Foreign Unit = KZT):</span>
+            <span style="font-weight:700;font-size:0.82rem;color:var(--deep)">${gw('editable')}:</span>
             <div class="rate-field">
               <label for="rateUSD">1 USD =</label>
               <input type="number" id="rateUSD" value="500" min="1" step="0.5"> ₸
@@ -1758,16 +1849,16 @@ function renderTravelGuide(activeChapterId) {
           <div class="converter-outputs-grid" id="converterResults"></div>
         </div>
 
-        <h3 class="guide-subheading">💰 Daily Cost Estimates (August 2026)</h3>
+        <h3 class="guide-subheading">💰 ${gt('dailyCosts')}</h3>
         <div class="guide-data-table-wrap">
           <table class="guide-data-table">
             <thead>
               <tr>
-                <th>Travel Style</th>
-                <th>Daily Total</th>
-                <th>Accommodation</th>
-                <th>Food & Dining</th>
-                <th>Transport</th>
+                <th>${gt('travelStyle')}</th>
+                <th>${gt('dailyTotal')}</th>
+                <th>${gt('accommodation')}</th>
+                <th>${gt('foodDining')}</th>
+                <th>${gt('transport')}</th>
               </tr>
             </thead>
             <tbody>
@@ -1793,7 +1884,7 @@ function renderTravelGuide(activeChapterId) {
           <p class="guide-ch-summary">${g.chapters[3].summary}</p>
         </div>
 
-        <h3 class="guide-subheading">🚇 City Public Transit</h3>
+        <h3 class="guide-subheading">🚇 ${gt('cityTransit')}</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-bottom:20px;">
           ${g.chapters[3].contentSections[0].modes.map(m => `
             <div style="background:var(--sand-light);border:1px solid var(--line);border-radius:var(--radius-md);padding:16px;">
@@ -1803,40 +1894,40 @@ function renderTravelGuide(activeChapterId) {
           `).join('')}
         </div>
 
-        <h3 class="guide-subheading">🚆 Intercity Trains: High-Speed Talgo & Soviet Classics</h3>
+        <h3 class="guide-subheading">🚆 ${gt('intercityTrains')}</h3>
         <p class="guide-p">${g.chapters[3].contentSections[1].text}</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-bottom:20px;">
           ${g.chapters[3].contentSections[1].trainTypes.map(tr => `
             <div style="background:var(--sand-light);border:1px solid var(--line);border-radius:var(--radius-md);padding:16px;">
               <h5 style="color:var(--deep);font-weight:700;margin-bottom:6px;">${tr.name}</h5>
               <p style="color:var(--ink-soft);font-size:0.92rem;line-height:1.5;margin-bottom:8px;">${tr.desc}</p>
-              <div class="guide-app-tip">💡 <strong>Tip:</strong> ${tr.tip}</div>
+              <div class="guide-app-tip">💡 <strong>${gt('tip')}:</strong> ${tr.tip}</div>
             </div>
           `).join('')}
         </div>
 
-        <h3 class="guide-subheading">✈️ Domestic Aviation: Spanning the Steppe</h3>
+        <h3 class="guide-subheading">✈️ ${gt('domesticAviation')}</h3>
         <p class="guide-p">${g.chapters[3].contentSections[2].text}</p>
         <ul style="margin:10px 0 20px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[3].contentSections[2].airlines.map(a => `<li><strong>${a.name}:</strong> ${a.desc}</li>`).join('')}
         </ul>
 
-        <h3 class="guide-subheading">🚗 Highway Driving & 4WD Requirements</h3>
+        <h3 class="guide-subheading">🚗 ${gt('driving4wd')}</h3>
         <p class="guide-p">${g.chapters[3].contentSections[3].text}</p>
         <ul style="margin:10px 0 20px 20px;color:var(--ink-soft);font-size:0.95rem;line-height:1.6;">
           ${g.chapters[3].contentSections[3].drivingRules.map(r => `<li>${r}</li>`).join('')}
         </ul>
 
-        <h3 class="guide-subheading">📍 Intercity Distance & Transit Times Table</h3>
+        <h3 class="guide-subheading">📍 ${gt('distanceTable')}</h3>
         <div class="guide-data-table-wrap">
           <table class="guide-data-table">
             <thead>
               <tr>
-                <th>Route Corridor</th>
-                <th>Distance</th>
-                <th>Flight Duration</th>
-                <th>Train (Talgo)</th>
-                <th>Road / Highway</th>
+                <th>${gt('routeCorridor')}</th>
+                <th>${gt('distance')}</th>
+                <th>${gt('flightDuration')}</th>
+                <th>${gt('trainTalgo')}</th>
+                <th>${gt('roadHighway')}</th>
               </tr>
             </thead>
             <tbody>
@@ -1873,23 +1964,23 @@ function renderTravelGuide(activeChapterId) {
                 <h3 class="guide-dest-name">${d.name}</h3>
                 <div class="guide-dest-sub">${d.subtitle}</div>
                 <p class="guide-p">${d.desc}</p>
-                <h5 style="color:var(--deep);font-size:0.94rem;font-weight:700;margin-top:10px;">🌟 Key Highlights:</h5>
+                <h5 style="color:var(--deep);font-size:0.94rem;font-weight:700;margin-top:10px;">🌟 ${gt('keyHighlights')}:</h5>
                 <ul class="guide-dest-highlights">
                   ${d.highlights.map(h => `<li>✓ ${h}</li>`).join('')}
                 </ul>
                 <div class="guide-callout" style="margin-bottom:0">
-                  <div class="guide-callout-title">💡 Local Insider Tip</div>
+                  <div class="guide-callout-title">💡 ${gt('localTip')}</div>
                   <p>${d.tip}</p>
                 </div>
                 ${d.id === 'dest-turkestan' ? `
                   <div style="margin-top:16px;padding:14px;background:#eef6f8;border:1px solid var(--blue);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
                     <div>
-                      <strong style="color:var(--deep);font-size:0.95rem;">Looking for a certified guide in Turkestan?</strong>
-                      <div style="font-size:0.85rem;color:var(--ink-soft)">Meet our licensed historian-guide Alisher Nurpeisov for tailored UNESCO tours.</div>
+                      <strong style="color:var(--deep);font-size:0.95rem;">${gt('certifiedGuide')}</strong>
+                      <div style="font-size:0.85rem;color:var(--ink-soft)">${gt('guideProfileText')}</div>
                     </div>
                     <button class="btn whatsapp" data-go="guide" style="font-size:0.85rem;padding:6px 14px;">
                       ${SVG_ICONS.whatsapp}
-                      <span>View Guide Profile</span>
+                      <span>${gt('viewGuideProfile')}</span>
                     </button>
                   </div>
                 ` : ''}
@@ -1915,7 +2006,7 @@ function renderTravelGuide(activeChapterId) {
                 <span style="font-size:0.82rem;font-weight:700;color:var(--deep);">${it.pace}</span>
               </div>
               <h3 class="guide-itin-title">${it.title}</h3>
-              <p class="guide-itin-meta"><strong>Ideal for:</strong> ${it.idealFor}</p>
+              <p class="guide-itin-meta"><strong>${gt('idealFor')}:</strong> ${it.idealFor}</p>
 
               <div class="guide-itin-days-list">
                 ${it.days.map(d => `
@@ -1934,7 +2025,7 @@ function renderTravelGuide(activeChapterId) {
       </section>
 
       <!-- Return to Top Floating Link -->
-      <a href="#guide" class="guide-back-to-top" title="Return to Top" aria-label="Return to Top">↑</a>
+      <a href="#guide" class="guide-back-to-top" title="${gt('returnToTop')}" aria-label="${gt('returnToTop')}">↑</a>
     </article>
   `;
 }
@@ -1968,19 +2059,19 @@ function initGuideWidgets() {
 
     resultsBox.innerHTML = `
       <div class="converter-res-card ${base === 'KZT' ? 'highlight' : ''}">
-        <div class="converter-res-curr">₸ Tenge (KZT)</div>
+        <div class="converter-res-curr">₸ ${gw('tenge')} (KZT)</div>
         <div class="converter-res-val">${Math.round(kzt).toLocaleString()} ₸</div>
       </div>
       <div class="converter-res-card ${base === 'USD' ? 'highlight' : ''}">
-        <div class="converter-res-curr">$ US Dollar</div>
+        <div class="converter-res-curr">$ ${gw('dollar')}</div>
         <div class="converter-res-val">$${usdVal.toFixed(2)}</div>
       </div>
       <div class="converter-res-card ${base === 'EUR' ? 'highlight' : ''}">
-        <div class="converter-res-curr">€ Euro</div>
+        <div class="converter-res-curr">€ ${gw('euro')}</div>
         <div class="converter-res-val">€${eurVal.toFixed(2)}</div>
       </div>
       <div class="converter-res-card ${base === 'AED' ? 'highlight' : ''}">
-        <div class="converter-res-curr">د.إ UAE Dirham</div>
+        <div class="converter-res-curr">د.إ ${gw('dirham')}</div>
         <div class="converter-res-val">${aedVal.toFixed(2)} AED</div>
       </div>
     `;
@@ -2011,30 +2102,30 @@ function initGuideWidgets() {
     if (airport === 'ALA') {
       if (fare <= 5500) {
         verdictClass = 'verdict-green';
-        title = '✅ Fair & Standard Price (Almaty ALA)';
-        body = `Your quote of ${fare.toLocaleString()} ₸ is completely in line with standard Yandex Go Economy and Comfort app rates (~3,500 – 5,500 ₸ / $7–$11) into central Almaty. This is a fair rate.`;
+        title = `✅ ${gw('fair')} (Almaty ALA)`;
+        body = taxiVerdictText('fairA', fare);
       } else if (fare <= 8500) {
         verdictClass = 'verdict-yellow';
-        title = '⚠️ Elevated Fare / Surge Conditions';
-        body = `Your quote of ${fare.toLocaleString()} ₸ is roughly 1.5x to 2x the standard economy rate. This can be normal for Comfort+ or during winter blizzards / Friday peak traffic, but is higher than normal base app pricing.`;
+        title = `⚠️ ${gw('elevated')}`;
+        body = taxiVerdictText('elevatedA', fare);
       } else {
         verdictClass = 'verdict-red';
-        title = '🚨 Extreme Airport Taxi Scam Alert!';
-        body = `Your quote of ${fare.toLocaleString()} ₸ is significantly over market value (often 3x to 10x higher!). Unofficial gypsy drivers at Almaty Airport aggressively target arriving tourists with quotes between 15,000 ₸ and 50,000 ₸. <strong>Do not take this ride.</strong> Say “Nyet, spasibo” and order a Yandex Go on airport Wi-Fi (~4,000 ₸) or use the official taxi counter inside the terminal.`;
+        title = `🚨 ${gw('extreme')}`;
+        body = taxiVerdictText('scamA', fare);
       }
     } else {
       if (fare <= 4500) {
         verdictClass = 'verdict-green';
-        title = '✅ Fair & Standard Price (Astana NQZ)';
-        body = `Your quote of ${fare.toLocaleString()} ₸ matches normal Yandex Go app rates (~3,000 – 4,500 ₸ / $6–$9) from Astana Airport to the Left Bank (Baiterek / Khan Shatyr).`;
+        title = `✅ ${gw('fairAstana')} (Astana NQZ)`;
+        body = taxiVerdictText('fairN', fare);
       } else if (fare <= 7500) {
         verdictClass = 'verdict-yellow';
-        title = '⚠️ Elevated Surge / Comfort Fare';
-        body = `Your quote of ${fare.toLocaleString()} ₸ is higher than standard off-peak fares (~3,500 ₸), but reasonable for severe sub-zero winter blizzards or Comfort+ class.`;
+        title = `⚠️ ${gw('elevated')}`;
+        body = taxiVerdictText('elevatedN', fare);
       } else {
         verdictClass = 'verdict-red';
-        title = '🚨 High Overcharge Warning!';
-        body = `Your quote of ${fare.toLocaleString()} ₸ is an overcharge. Unofficial terminal solicitors often quote 15,000 – 35,000 ₸. Order through Yandex Go on airport Wi-Fi or visit the official terminal dispatch desk.`;
+        title = `🚨 ${gw('highAstana')}`;
+        body = taxiVerdictText('scamN', fare);
       }
     }
 
@@ -2220,7 +2311,7 @@ const SCREENS = {
         <h2 style="margin-top:16px">${pick(p.name)}</h2>
         <p>${pick(p.desc)}</p>
         <h3 style="margin:24px 0 12px">${t('where')}</h3>
-        ${ph(p.map, 'MAP_PLACEHOLDER', 'map')}
+        ${addressBlock(p)}
         <div style="margin-top:14px">
           <span class="pin">📍 ${t('start')}: ${p.start.label}</span>
           <span class="pin">🏁 ${t('dest')}: ${pick(p.name)}</span>
@@ -2265,15 +2356,15 @@ const SCREENS = {
         <h2 style="margin-top:16px">${pick(h.name)}</h2>
         ${h.sample ? `<span class="badge">${t('sample')}</span>` : ''}
         <p>${pick(h.desc)}</p>
-        <p class="hint">📍 ${h.address ? pick(h.address) : t('addr')}</p>
-        <div style="margin-top:16px">
-          ${ph(h.map, 'HOTEL_MAP_PLACEHOLDER', 'map')}
-        </div>
+        ${addressBlock(h)}
         <div class="route">${t('route')}</div>
       </section>`;
   },
 
-  // 7. Guide Profile Screen (Original Personal Guide Profile)
+  // 7. MySQL-backed public guide directory
+  guides: id => id && window.renderGuideProfile ? window.renderGuideProfile(id) : (window.renderGuidesDirectory ? window.renderGuidesDirectory() : `<section class="screen"><h2>${t('guides')}</h2></section>`),
+
+  // 8. Guide Profile Screen (Original Personal Guide Profile)
   guide: () => renderPersonalTourGuideScreen(),
   'tour-guide': () => renderPersonalTourGuideScreen(),
 
@@ -2301,6 +2392,7 @@ function card(p) {
       ${ph(p.img, p.tag + '_IMAGE', 'r43')}
       <h3>${pick(p.name)}</h3>
       <p>${pick(p.desc)}</p>
+      ${addressBlock(p)}
       <div class="row">
         <button class="qrbtn" data-go="pay/${p.id}" aria-label="Kaspi QR">
           ${ph(p.qr, p.tag + '_QR_IMAGE', 'sq')}
@@ -2323,10 +2415,8 @@ function hotelCard(h) {
       <h3>${pick(h.name)}</h3>
       ${h.sample ? `<span class="badge">${t('sample')}</span>` : ''}
       <p>${pick(h.desc)}</p>
-      <p class="hint">📍 ${h.address ? pick(h.address) : t('addr')}</p>
-      <button class="btn" data-go="hotel/${h.id}">
-        ${t('details')}
-      </button>
+      ${addressBlock(h)}
+      ${h.bookingVerified ? `<a class="btn booking-link" href="${h.booking}" target="_blank" rel="noopener noreferrer">${bookingUi('view')} ↗</a>` : `<span class="booking-unverified">${bookingUi('unavailable')}</span>`}
     </article>`;
 }
 
@@ -2378,7 +2468,7 @@ function renderFeed() {
             ${item.isSponsored ? `<span class="feed-sponsored-chip">${t('feedSponsored')}</span>` : ''}
           </div>
           <div class="feed-card-body">
-            <span class="feed-date">${item.date}</span>
+            <span class="feed-date">${formatFeedDate(item.date)}</span>
             <h4 class="feed-card-title">${pick(item.title)}</h4>
             <p class="feed-card-desc">${pick(item.desc)}</p>
             <button class="feed-card-action" data-action="${item.action.target}">
@@ -2486,7 +2576,7 @@ function renderFooter() {
               📞 ${CONTACT_CONFIG.phone ? `<a href="tel:${CONTACT_CONFIG.phone}">${CONTACT_CONFIG.phone}</a>` : `<span class="hint">${t('footerNotConfigured')} (script.js)</span>`}
             </li>
             <li class="footer-contact-item">
-              💬 <a href="${CONTACT_CONFIG.whatsapp}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">WhatsApp Inquiries</a>
+              💬 <a href="${CONTACT_CONFIG.whatsapp}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">${t('guideContactWhatsApp')}</a>
             </li>
           </ul>
         </div>
@@ -2495,7 +2585,7 @@ function renderFooter() {
       <!-- Bottom Bar -->
       <div class="footer-bottom-bar">
         <span>© 2026 QONAQ — ${t('footerRights')}</span>
-        <span>Turkistan Tourism & Heritage Guide</span>
+        <span>${t('footerGuideLabel')}</span>
       </div>
     </div>`;
 }
@@ -2548,6 +2638,7 @@ const PARENT = {
   places: 'home',
   about: 'home',
   hotels: 'home',
+  guides: 'home',
   guide: 'home',
   'tour-guide': 'home',
   'travel-guide': 'home',
@@ -2738,4 +2829,161 @@ try {
 initModalEvents();
 renderFeed();
 renderFooter();
+
+/* ==========================================================================\n+   18. QONAQ HOTEL CATALOG EXTENSION\n+   --------------------------------------------------------------------------\n+   The five requested properties are deliberately kept price/rating neutral:\n+   this static site has no live availability feed, so it never invents values.\n+   Names and photos are local assets; booking buttons open a search page where\n+   the guest can verify current availability and price.\n+   ========================================================================== */
+const QONAQ_CATALOG_HOTELS = [
+  {
+    id: 'sem-brand-hotel', img: 'foto8.jpg', map: 'foto9.jpeg',
+    name: { en: 'SEM Brand Hotel', kk: 'SEM Brand қонақүйі', ru: 'SEM Brand Hotel', tr: 'SEM Brand Otel' },
+    address: { en: 'Turkistan, Kazakhstan · Verify exact address with the property', kk: 'Түркістан, Қазақстан · Нақты мекенжайды қонақүйден тексеріңіз', ru: 'Туркестан, Казахстан · Точный адрес уточняйте у отеля', tr: 'Türkistan, Kazakistan · Kesin adresi otelden doğrulayın' },
+    desc: { en: 'A Turkistan accommodation listing for travellers comparing local stays. Confirm room types, facilities and current availability directly before booking.', kk: 'Түркістандағы орналастыру нұсқасы. Нөмір түрін, қолжетімділікті және қызметтерді брондау алдында тікелей нақтылаңыз.', ru: 'Вариант размещения в Туркестане для сравнения. Перед бронированием уточните тип номера, удобства и наличие напрямую.', tr: 'Türkistan’da konaklama seçeneği. Rezervasyondan önce oda tipini, olanakları ve müsaitliği doğrudan doğrulayın.' },
+    facilities: { en: ['Accommodation in Turkistan', 'Room details on request', 'Direct verification recommended'], kk: ['Түркістандағы орналастыру', 'Нөмір мәліметі сұрау бойынша', 'Тікелей тексеру ұсынылады'], ru: ['Размещение в Туркестане', 'Данные о номерах по запросу', 'Рекомендуем проверить напрямую'], tr: ['Türkistan’da konaklama', 'Oda bilgisi talep üzerine', 'Doğrudan doğrulama önerilir'] },
+    source: 'Booking.com', booking: 'https://www.booking.com/hotel/kz/sem-brand.html', bookingVerified: true
+  },
+  {
+    id: 'silk-way', img: 'foto5.jpg', map: 'foto6.jpeg',
+    name: { en: 'Silk Way', kk: 'Silk Way', ru: 'Silk Way', tr: 'Silk Way' },
+    address: { en: 'Turkistan, Kazakhstan · Verify exact address with the property', kk: 'Түркістан, Қазақстан · Нақты мекенжайды қонақүйден тексеріңіз', ru: 'Туркестан, Казахстан · Точный адрес уточняйте у отеля', tr: 'Türkistan, Kazakistan · Kesin adresi otelden doğrulayın' },
+    desc: { en: 'A Silk Road-themed accommodation name found in Turkistan listings. Use the booking search to confirm the exact property, rooms and guest capacity.', kk: 'Түркістан тізімдерінде кездесетін Жібек жолы тақырыбындағы орналастыру орны. Нақты нысан мен нөмірлерді брондау іздеуінен растаңыз.', ru: 'Размещение с названием в тематике Шёлкового пути. Через поиск бронирования подтвердите объект, номера и вместимость.', tr: 'Türkistan listelerinde İpek Yolu temalı bir konaklama seçeneği. Tesisi, odaları ve kapasiteyi rezervasyon aramasında doğrulayın.' },
+    facilities: { en: ['Accommodation in Turkistan', 'Room details on request', 'Current price not published here'], kk: ['Түркістандағы орналастыру', 'Нөмір мәліметі сұрау бойынша', 'Ағымдағы баға мұнда жарияланбайды'], ru: ['Размещение в Туркестане', 'Данные о номерах по запросу', 'Актуальная цена здесь не публикуется'], tr: ['Türkistan’da konaklama', 'Oda bilgisi talep üzerine', 'Güncel fiyat burada yayınlanmıyor'] },
+    source: 'Booking.com', booking: 'https://www.booking.com/hotel/kz/boutique-silk-way.html', bookingVerified: true
+  },
+  {
+    id: 'kisva-hotel', img: 'foto2.jpg', map: 'foto4.jpeg',
+    name: { en: 'Kisva Hotel', kk: 'Kisva қонақүйі', ru: 'Kisva Hotel', tr: 'Kisva Otel' },
+    address: { en: 'Turkistan, Kazakhstan · Verify exact address with the property', kk: 'Түркістан, Қазақстан · Нақты мекенжайды қонақүйден тексеріңіз', ru: 'Туркестан, Казахстан · Точный адрес уточняйте у отеля', tr: 'Türkistan, Kazakistan · Kesin adresi otelden doğrulayın' },
+    desc: { en: 'A local hotel option presented for trip planning. Room category, guest capacity, amenities and price should be checked for the selected dates.', kk: 'Саяхат жоспарлауға арналған жергілікті қонақүй нұсқасы. Нөмір санатын, сыйымдылықты, қызметтер мен бағаны күндер бойынша тексеріңіз.', ru: 'Местный вариант для планирования поездки. Категорию номера, вместимость, удобства и цену проверьте на нужные даты.', tr: 'Seyahat planlaması için yerel bir otel seçeneği. Oda kategorisi, kapasite, olanaklar ve fiyat seçilen tarihler için kontrol edilmelidir.' },
+    facilities: { en: ['Accommodation in Turkistan', 'Dates and rooms subject to availability', 'Ask property for included services'], kk: ['Түркістандағы орналастыру', 'Күндер мен нөмірлер қолжетімділікке байланысты', 'Қызметтер құрамын қонақүйден сұраңыз'], ru: ['Размещение в Туркестане', 'Даты и номера зависят от наличия', 'Состав услуг уточняйте у отеля'], tr: ['Türkistan’da konaklama', 'Tarih ve odalar müsaitliğe bağlıdır', 'Dahil hizmetleri tesise sorun'] },
+    source: 'Booking.com', booking: 'https://www.booking.com/hotel/kz/kisva.html', bookingVerified: true
+  },
+  {
+    id: 'zam-zam', img: 'foto1.jpg', map: 'foto7.jpeg',
+    name: { en: 'Zam Zam', kk: 'Zam Zam', ru: 'Zam Zam', tr: 'Zam Zam' },
+    address: { en: 'Turkistan, Kazakhstan · Verify exact address with the property', kk: 'Түркістан, Қазақстан · Нақты мекенжайды қонақүйден тексеріңіз', ru: 'Туркестан, Казахстан · Точный адрес уточняйте у отеля', tr: 'Türkistan, Kazakistan · Kesin adresi otelden doğrulayın' },
+    desc: { en: 'A Turkistan stay to compare alongside other local properties. QONAQ shows no unverified rating, review or price for this listing.', kk: 'Басқа жергілікті нысандармен салыстыруға болатын Түркістандағы орын. QONAQ расталмаған рейтинг, пікір немесе бағаны көрсетпейді.', ru: 'Вариант размещения в Туркестане для сравнения. QONAQ не показывает непроверенные рейтинг, отзывы или цену.', tr: 'Diğer yerel tesislerle karşılaştırılabilecek bir Türkistan konaklaması. QONAQ doğrulanmamış puan, yorum veya fiyat göstermez.' },
+    facilities: { en: ['Accommodation in Turkistan', 'Verified details only', 'Check availability before travel'], kk: ['Түркістандағы орналастыру', 'Тек расталған мәліметтер', 'Сапар алдында қолжетімділікті тексеріңіз'], ru: ['Размещение в Туркестане', 'Только проверенные сведения', 'Проверьте наличие перед поездкой'], tr: ['Türkistan’da konaklama', 'Yalnızca doğrulanmış bilgiler', 'Seyahatten önce müsaitliği kontrol edin'] },
+    source: 'Booking.com', booking: 'https://www.booking.com/hotel/kz/zam-zam-turkestan.en-gb.html', bookingVerified: true
+  },
+  {
+    id: 'city-hotel', img: 'foto9.jpeg', map: 'foto6.jpeg',
+    name: { en: 'City Hotel', kk: 'City Hotel', ru: 'City Hotel', tr: 'City Hotel' },
+    address: { en: 'Turkistan, Kazakhstan · Verify exact address with the property', kk: 'Түркістан, Қазақстан · Нақты мекенжайды қонақүйден тексеріңіз', ru: 'Туркестан, Казахстан · Точный адрес уточняйте у отеля', tr: 'Türkistan, Kazakistan · Kesin adresi otelden doğrulayın' },
+    desc: { en: 'A city accommodation option for visitors who want to compare location and room availability in Turkistan.', kk: 'Түркістандағы орналасуы мен нөмір қолжетімділігін салыстырғысы келетін қонақтарға арналған қала қонақүйі.', ru: 'Городской вариант размещения для сравнения расположения и доступности номеров в Туркестане.', tr: 'Türkistan’da konum ve oda müsaitliğini karşılaştırmak isteyen ziyaretçiler için şehir konaklaması.' },
+    facilities: { en: ['Accommodation in Turkistan', 'Confirm room capacity with property', 'Current price available on booking page'], kk: ['Түркістандағы орналастыру', 'Нөмір сыйымдылығын қонақүйден растаңыз', 'Ағымдағы баға брондау бетінде көрсетіледі'], ru: ['Размещение в Туркестане', 'Вместимость номера уточняйте у отеля', 'Актуальная цена указана на странице бронирования'], tr: ['Türkistan’da konaklama', 'Oda kapasitesini tesisten doğrulayın', 'Güncel fiyat rezervasyon sayfasında gösterilir'] },
+    source: 'Booking.com', booking: 'https://www.booking.com/hotel/kz/city-turkistan.html', bookingVerified: true
+  }
+];
+
+HOTELS.push(...QONAQ_CATALOG_HOTELS);
+QONAQ_CATALOG_HOTELS.forEach(h => {
+  h.googleMaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name.en + ' Turkistan Kazakhstan')}`;
+  h.twoGis = `https://2gis.kz/turkistan/search/${encodeURIComponent(h.name.en)}`;
+  const address = h.address || {};
+  ['tr', 'uz', 'ar', 'zh', 'ko', 'ja', 'fr'].forEach(locale => { if (!address[locale]) address[locale] = address.en || 'Turkistan, Kazakhstan'; });
+  h.address = address;
+});
+
+const CURRENCIES = { KZT: '₸', USD: '$', EUR: '€' };
+// Explicit editorial rates used only when a verified KZT price is supplied.
+// They are not presented as live market rates.
+const CURRENCY_RATES = { KZT: 1, USD: 500, EUR: 540 };
+let currency = 'KZT';
+try { currency = localStorage.getItem('qonaqCurrency') || 'KZT'; } catch (e) {}
+if (!CURRENCIES[currency]) currency = 'KZT';
+const qonaqText = {
+  en: { catalogIntro: 'Compare local stays in Turkistan. Prices, ratings and reviews are shown only when verified; otherwise use “Check price”.', currency: 'Currency', checkPrice: 'Check price', book: 'Check availability', facilities: 'What to verify', source: 'Source note', noRatings: 'No verified rating or review shown', guests: 'Guest capacity: confirm with property', rooms: 'Room information: confirm for your dates', bookingNote: 'Booking search opens in a new tab. Confirm the exact property and current terms before paying.' },
+  kk: { catalogIntro: 'Түркістандағы орналастыру орындарын салыстырыңыз. Баға, рейтинг және пікір тек расталған кезде көрсетіледі; әйтпесе «Бағаны тексеру» таңдаңыз.', currency: 'Валюта', checkPrice: 'Бағаны тексеру', book: 'Қолжетімділікті тексеру', facilities: 'Нені нақтылау керек', source: 'Дереккөз ескертпесі', noRatings: 'Расталған рейтинг немесе пікір көрсетілмейді', guests: 'Қонақ сыйымдылығы: нысаннан нақтылаңыз', rooms: 'Нөмір ақпараты: күндеріңізге нақтылаңыз', bookingNote: 'Брондау іздеуі жаңа бетте ашылады. Төлем алдында нысан мен шарттарды тексеріңіз.' },
+  ru: { catalogIntro: 'Сравнивайте варианты размещения в Туркестане. Цены, рейтинги и отзывы показываются только при подтверждении; иначе указано «Уточнить цену».', currency: 'Валюта', checkPrice: 'Уточнить цену', book: 'Проверить наличие', facilities: 'Что уточнить', source: 'Примечание об источнике', noRatings: 'Подтверждённый рейтинг и отзывы не указаны', guests: 'Вместимость: уточняйте у объекта', rooms: 'Номера: уточняйте на выбранные даты', bookingNote: 'Поиск бронирования откроется в новой вкладке. Перед оплатой проверьте объект и актуальные условия.' },
+  tr: { catalogIntro: 'Türkistan’daki konaklama seçeneklerini karşılaştırın. Fiyat, puan ve yorumlar yalnızca doğrulanırsa gösterilir; aksi halde “Fiyatı kontrol et” yazılır.', currency: 'Para birimi', checkPrice: 'Fiyatı kontrol et', book: 'Müsaitliği kontrol et', facilities: 'Doğrulanacak bilgiler', source: 'Kaynak notu', noRatings: 'Doğrulanmış puan veya yorum gösterilmiyor', guests: 'Kapasite: tesisten doğrulayın', rooms: 'Oda bilgisi: tarihleriniz için doğrulayın', bookingNote: 'Rezervasyon araması yeni sekmede açılır. Ödeme öncesi tesisi ve güncel koşulları kontrol edin.' }
+};
+Object.assign(qonaqText.en, { stay: 'QONAQ STAY', hotel: 'QONAQ HOTEL' });
+Object.assign(qonaqText.kk, { stay: 'QONAQ ОРНАЛАСУЫ', hotel: 'QONAQ ҚОНАҚҮЙІ' });
+Object.assign(qonaqText.ru, { stay: 'QONAQ РАЗМЕЩЕНИЕ', hotel: 'ОТЕЛЬ QONAQ' });
+Object.assign(qonaqText.tr, { stay: 'QONAQ KONAKLAMA', hotel: 'QONAQ OTELİ' });
+const BOOKING_UI = {
+  en: { view: 'Open verified Booking.com page', unavailable: 'Booking.com page not verified' },
+  kk: { view: 'Booking.com расталған бетін ашу', unavailable: 'Booking.com беті расталмаған' },
+  ru: { view: 'Открыть подтверждённую страницу Booking.com', unavailable: 'Страница Booking.com не подтверждена' },
+  tr: { view: 'Doğrulanmış Booking.com sayfasını aç', unavailable: 'Booking.com sayfası doğrulanmadı' },
+  uz: { view: 'Tasdiqlangan Booking.com sahifasini ochish', unavailable: 'Booking.com sahifasi tasdiqlanmagan' },
+  ar: { view: 'فتح صفحة Booking.com الموثقة', unavailable: 'لم يتم التحقق من صفحة Booking.com' },
+  zh: { view: '打开已验证的 Booking.com 页面', unavailable: 'Booking.com 页面尚未验证' },
+  ko: { view: '확인된 Booking.com 페이지 열기', unavailable: 'Booking.com 페이지가 확인되지 않음' },
+  ja: { view: '確認済みの Booking.com ページを開く', unavailable: 'Booking.com ページ未確認' },
+  fr: { view: 'Ouvrir la page Booking.com vérifiée', unavailable: 'Page Booking.com non vérifiée' }
+};
+const qt = key => (qonaqText[lang] || qonaqText.en)[key] || qonaqText.en[key];
+const bookingUi = key => (BOOKING_UI[lang] || BOOKING_UI.en)[key];
+const formatHotelPrice = priceKzt => {
+  if (!Number.isFinite(priceKzt)) return qt('checkPrice');
+  const converted = priceKzt / CURRENCY_RATES[currency];
+  return `${CURRENCIES[currency]}${converted.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+};
+const currencyLabel = priceKzt => `${formatHotelPrice(priceKzt)} · ${currency}`;
+
+function hotelCard(h) {
+  const isCatalog = Boolean(h.facilities);
+  return `<article class="card hotel-card${isCatalog ? ' catalog-hotel' : ''}">
+    ${ph(h.img, h.name.en + ' photo', 'r43')}
+    <div class="hotel-card-content"><div class="hotel-card-kicker">${isCatalog ? qt('stay') : qt('hotel')}</div>
+    <h3>${pick(h.name)}</h3><p>${pick(h.desc)}</p>
+    ${addressBlock(h)}
+    ${isCatalog ? `<div class="hotel-meta"><span>${qt('noRatings')}</span><strong>${currencyLabel(h.priceKzt)}</strong></div>` : ''}
+    ${h.bookingVerified ? `<a class="btn booking-link" href="${h.booking}" target="_blank" rel="noopener noreferrer">${bookingUi('view')} ↗</a>` : `<span class="booking-unverified">${bookingUi('unavailable')}</span>`}
+    </div></article>`;
+}
+
+SCREENS.hotels = () => `<section class="screen hotels-screen">${back}<div class="hotel-heading"><div><h2>${t('hotels')}</h2><p class="hotel-intro">${qt('catalogIntro')}</p></div><label class="currency-control">${qt('currency')}<select id="currencySelect" aria-label="${qt('currency')}">${Object.keys(CURRENCIES).map(code => `<option value="${code}" ${currency === code ? 'selected' : ''}>${code} ${CURRENCIES[code]}</option>`).join('')}</select></label></div>${HOTELS.map(hotelCard).join('')}</section>`;
+SCREENS.hotel = id => { const h = HOTELS.find(x => x.id === id); if (!h) return SCREENS.hotels(); const isCatalog = Boolean(h.facilities); return `<section class="screen hotel-detail-screen">${back}${ph(h.img, h.name.en + ' photo', 'r169')}<div class="hotel-detail-head"><div><span class="hotel-card-kicker">${isCatalog ? qt('stay') : qt('hotel')}</span><h2>${pick(h.name)}</h2></div><div class="hotel-price-large">${isCatalog ? currencyLabel(h.priceKzt) : t('addr')}</div></div><p>${pick(h.desc)}</p>${addressBlock(h)}${isCatalog ? `<div class="hotel-detail-grid"><div><h3>${qt('facilities')}</h3><ul class="hotel-facilities">${h.facilities[lang] ? h.facilities[lang].map(x => `<li>${x}</li>`).join('') : h.facilities.en.map(x => `<li>${x}</li>`).join('')}</ul></div><div><h3>${qt('rooms')}</h3><p>${qt('guests')}</p><p class="hotel-source"><strong>${qt('source')}:</strong> ${h.source}</p></div></div><p class="hotel-booking-note">${qt('bookingNote')}</p><div class="hotel-actions"><a class="btn" href="${h.booking}" target="_blank" rel="noopener noreferrer">${qt('book')} ↗</a><a class="btn ghost" href="${h.booking}" target="_blank" rel="noopener noreferrer">${qt('checkPrice')} ↗</a></div>` : `<div class="route">${t('route')}</div>`}</section>`; };
+
+const renderHotelDetail = SCREENS.hotel;
+SCREENS.hotel = id => {
+  const html = renderHotelDetail(id);
+  const hotel = HOTELS.find(item => item.id === id);
+  if (!hotel || !hotel.bookingVerified || html.includes('booking-link')) return html;
+  return html.replace('</section>', `<div class="hotel-actions"><a class="btn booking-link" href="${hotel.booking}" target="_blank" rel="noopener noreferrer">${bookingUi('view')} ↗</a></div></section>`);
+};
+
+document.addEventListener('change', e => { if (e.target.id !== 'currencySelect') return; currency = e.target.value; try { localStorage.setItem('qonaqCurrency', currency); } catch (err) {} route(true); });
+
+// Apply the saved language after the catalog extension has been registered.
+const GUIDE_CORE_TRANSLATIONS = {
+  ru: { meta: ['Вы здесь не турист. Вы — гость.', 'Полный путеводитель по Казахстану', 'Издание: август 2026'], intro: ['Философия QONAQ (Қонақ)', 'В казахской культуре гость считается посланником Бога.', 'Это древнее правило гостеприимства сформировалось в степи и остаётся частью путешествия по Казахстану.'], chapters: [['Перед поездкой', '1. Перед поездкой', 'Приложения, карты, такси, eSIM, билеты и безналичная экосистема Kaspi.'], ['Прибытие и аэропорты', '2. Прибытие', 'Аэропорты Алматы и Астаны, такси и автобусы.'], ['Оплата и деньги', '3. Оплата', 'Карты, наличные, обмен валюты и чаевые.'], ['Передвижение', '4. Передвижение', 'Городской транспорт, поезда, самолёты и дороги.'], ['Куда ехать', '5. Куда поехать', 'Главные направления Казахстана и лучшее время для визита.'], ['Маршруты', '6. Маршруты', 'Проверенные маршруты на 4, 7 и 14 дней.']] },
+  kk: { meta: ['Мұнда сіз турист емессіз. Сіз — қонақсыз.', 'Қазақстанға арналған толық жолсілтеме', '2026 жылғы тамыз басылымы'], intro: ['QONAQ философиясы (Қонақ)', 'Қазақ мәдениетінде қонақ Құдай жіберген елші саналады.', 'Бұл көне қонақжайлық дәстүрі далада қалыптасып, Қазақстанға сапардың маңызды бөлігі болып қалды.'], chapters: [['Жолға шығар алдында', '1. Жолға шығар алдында', 'Қосымшалар, карталар, такси, eSIM, билет және Kaspi экожүйесі.'], ['Келу және әуежайлар', '2. Келу', 'Алматы мен Астана әуежайлары, такси және автобустар.'], ['Төлем және ақша', '3. Төлем', 'Карталар, қолма-қол ақша, валюта айырбастау және шайпұл.'], ['Қозғалу', '4. Қозғалу', 'Қалалық көлік, пойыздар, ұшақтар және жолдар.'], ['Қайда бару керек', '5. Қайда бару керек', 'Қазақстанның негізгі бағыттары және баруға қолайлы уақыт.'], ['Бағыттар', '6. Бағыттар', '4, 7 және 14 күнге арналған дайын бағыттар.']] },
+  tr: { meta: ['Burada turist değilsiniz. Siz bir konuğumuzsunuz.', 'Eksiksiz Kazakistan Seyahat Rehberi', 'Ağustos 2026 baskısı'], intro: ['QONAQ felsefesi (Қонақ)', 'Kazak kültüründe konuğun Tanrı tarafından gönderildiğine inanılır.', 'Bu eski misafirperverlik kuralı bozkırda oluştu ve Kazakistan yolculuğunun hâlâ önemli bir parçası.'], chapters: [['Yola çıkmadan önce', '1. Yola çıkmadan önce', 'Uygulamalar, haritalar, taksi, eSIM, biletler ve Kaspi ekosistemi.'], ['Varış ve havalimanları', '2. Varış', 'Almatı ve Astana havalimanları, taksi ve otobüsler.'], ['Ödeme ve para', '3. Ödeme', 'Kartlar, nakit, döviz bozdurma ve bahşiş.'], ['Ulaşım', '4. Ulaşım', 'Şehir içi ulaşım, trenler, uçuşlar ve yollar.'], ['Nereye gidilir', '5. Nereye gidilir', 'Kazakistan’ın başlıca rotaları ve uygun ziyaret zamanları.'], ['Rotalar', '6. Rotalar', '4, 7 ve 14 günlük hazırlanmış rotalar.']] }
+};
+function localizeGuideCore(g) {
+  if (!g.__qonaqCore) g.__qonaqCore = { meta: { ...g.meta }, intro: { ...g.intro }, chapters: g.chapters.map(ch => ({ title: ch.title, navLabel: ch.navLabel, summary: ch.summary })) };
+  if (lang === 'en') {
+    Object.assign(g.meta, g.__qonaqCore.meta); Object.assign(g.intro, g.__qonaqCore.intro);
+    g.chapters.forEach((chapter, index) => Object.assign(chapter, g.__qonaqCore.chapters[index]));
+    return;
+  }
+  const tr = GUIDE_CORE_TRANSLATIONS[lang];
+  if (!tr) return;
+  g.meta.heroTitle = tr.meta[0]; g.meta.heroSubtitle = tr.meta[1]; g.meta.edition = tr.meta[2];
+  g.intro.qonaqTitle = tr.intro[0]; g.intro.qonaqDefinition = tr.intro[1]; g.intro.hospitalityText = tr.intro[2];
+  g.chapters.forEach((chapter, index) => { const item = tr.chapters[index]; if (!item) return; chapter.title = item[0]; chapter.navLabel = item[1]; chapter.summary = item[2]; });
+}
+function formatFeedDate(value) {
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  const locale = ({ kk: 'kk-KZ', ru: 'ru-RU', en: 'en-US', tr: 'tr-TR' }[lang] || 'en-US');
+  return new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'short', day: 'numeric' }).format(parsed);
+}
+Object.assign(T.en, { footerGuideLabel: 'Turkistan Tourism & Heritage Guide' });
+Object.assign(T.kk, { footerGuideLabel: 'Түркістан туризмі және мұра жөніндегі гид' });
+Object.assign(T.ru, { footerGuideLabel: 'Туризм и историческое наследие Туркестана' });
+Object.assign(T.tr, { footerGuideLabel: 'Türkistan Turizm ve Miras Rehberi' });
+Object.assign(T.en, { guides: 'Guides' });
+Object.assign(T.kk, { guides: 'Гидтер' });
+Object.assign(T.ru, { guides: 'Гиды' });
+Object.assign(T.tr, { guides: 'Rehberler' });
+Object.assign(T.uz, { guides: 'Gidlar' });
+Object.assign(T.ar, { guides: 'المرشدون' });
+Object.assign(T.zh, { guides: '导游' });
+Object.assign(T.ko, { guides: '가이드' });
+Object.assign(T.ja, { guides: 'ガイド' });
+Object.assign(T.fr, { guides: 'Guides' });
 setLang(ALL[saved] ? saved : 'en');
+

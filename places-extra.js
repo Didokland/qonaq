@@ -11,25 +11,27 @@
      Пустой список [] = блок с фото не показывается.
      ------------------------------------------------------------------------ */
   const PHOTOS = {
-    'restaurant-1465': ['restaurant-1465.jpg'],
-    'restaurant-tary':     ['tary.jpg'],
-    'congress-hall':       [],
-    'akimat':              [],
-    'farabi-library':      [],
-    'mktu':                [],
-    'turkistan-hub':       [],
-    'khanshaiym-plaza':    [],
-    'wosong-university':   [],
-    'great-steppe-museum': [],
-    'rabia-sultan-begim':  [],
-    'kylwet-mosque':       [],
-    'sauran':              [],
-    'arystan-bab':         [],
-    'otrar':               [],
-    'ukash-ata':           [],
-    'esimkhan':            [],
-    'gauhar-ana':          [],
-    'kumshyk-ata':         []
+    'restaurant-1465': ['places/restaurant-1465.jpg'],
+    'restaurant-tary':     ['places/restaurant-tary.jpg'],
+    'congress-hall':       ['places/congress-hall.jpg'],
+    'akimat':              ['places/akimat.jpg'],
+    'farabi-library':      ['places/farabi-library.jpg'],
+    'mktu':                ['places/mktu.jpg'],
+    'turkistan-hub':       ['places/turkistan-hub.jpg'],
+    'khanshaiym-plaza':    ['places/khanshaiym-plaza.jpg'],
+    'wosong-university':   ['places/wosong-university.jpg'],
+    'great-steppe-museum': ['places/great-steppe-museum.jpg'],
+    'rabia-sultan-begim':  ['places/rabia-sultan-begim.jpg'],
+    'kylwet-mosque':       ['places/kylwet-mosque.jpg'],
+    'sauran':              ['places/sauran.jpg'],
+    'arystan-bab':         ['places/arystan-bab.jpg'],
+    'otrar':               ['places/otrar.jpg'],
+    'ukash-ata':           ['places/ukash-ata.jpg'],
+    'esimkhan':            ['places/esimkhan.jpg'],
+    'gauhar-ana':          ['places/gauhar-ana.jpg'],
+    'kumshyk-ata':         ['places/kumshyk-ata.jpg'],
+    'kuanysh-bazar':       [],
+    'altyn-orda-taxi':     []
   };
 
   /* ---- Общие тексты ---- */
@@ -64,14 +66,46 @@
     en: 'Turkistan (exact address to be confirmed)'
   };
 
+  const TR_PLACE_COPY = {
+    'restaurant-1465': ['Restaurant 14 65', 'Türkistan’da Kazak ve Avrupa yemekleri sunan restoran.'],
+    'restaurant-tary': ['Tary Restoranı', 'Türkistan’da geleneksel yöresel yemekler sunan restoran.'],
+    'congress-hall': ['Kongre Salonu', 'Türkistan’da forum, konser ve resmi etkinlikler için modern mekân.'],
+    'akimat': ['Türkistan Akimatı', 'Şehir ve bölge yönetiminin idari binası. Yalnızca dışarıdan görülebilir.'],
+    'farabi-library': ['El-Farabi Kütüphanesi', 'Otrar bölgesinde doğan büyük bilgin El-Farabi’nin adını taşıyan kütüphane.'],
+    'mktu': ['Hoca Ahmet Yesevi Uluslararası Kazak-Türk Üniversitesi (MKTÜ)', '1991’de kurulan, Türkistan’ın önemli uluslararası üniversitesi.'],
+    'turkistan-hub': ['Türkistan Hub', 'Türkistan’da iş, girişim ve etkinlikler için modern merkez.'],
+    'khanshaiym-plaza': ['Khanshaiym Plaza', 'Türkistan’da alışveriş ve eğlence kompleksi.'],
+    'wosong-university': ['Wosong Üniversitesi', 'Türkistan’da yükseköğretim kurumu.'],
+    'great-steppe-museum': ['Büyük Bozkır Ülkesi Müzesi', 'Büyük Bozkır’ın tarihi ve Kazak devletçiliği hakkında müze.'],
+    'rabia-sultan-begim': ['Rabia Sultan Begim Türbesi', 'Yesevi külliyesi yakınındaki, Uluğ Bey’in torunu Rabia Sultan Begim’e ait 15. yüzyıl türbesi.'],
+    'kylwet-mosque': ['Kılvet (Hilvet) Yeraltı Camii', 'Hoca Ahmet Yesevi’nin hayatının son yıllarını inzivada geçirdiği yeraltı hücresi.'],
+    'sauran': ['Antik Sauran Şehri', 'İyi korunmuş kerpiç surları ve kuleleriyle Orta Çağ İpek Yolu kale şehri.'],
+    'arystan-bab': ['Arystan Bab Türbesi', 'Hoca Ahmet Yesevi’nin hocası Arystan Bab’ın önemli ziyaret yeri olan türbesi.'],
+    'otrar': ['Antik Otrar Şehri', 'İpek Yolu’nun büyük şehri ve El-Farabi’nin doğum yeri; Moğol istilasında yıkılmıştır.'],
+    'ukash-ata': ['Ukaş Ata Türbesi', 'Türkistan çevresinde saygı gören türbe ve ziyaret yeri.'],
+    'esimkhan': ['Esim Han Türbesi', 'Türkistan’daki Kazak Hanlığı hükümdarı Esim Han’ın türbesi.'],
+    'gauhar-ana': ['Gauhar Ana Türbesi', 'Hoca Ahmet Yesevi’nin kızı Gauhar Ana ile ilişkilendirilen Türkistan türbesi.'],
+    'kumshyk-ata': ['Kumshyk Ata Türbesi', 'Türkistan bölgesinde kutsal kabul edilen türbe ve ziyaret yeri.']
+  };
+  const trCommon = {
+    tbc: 'Resmî çalışma saatleri henüz doğrulanmadı; lütfen kontrol edin.',
+    noEvents: 'Kampanya veya etkinlik henüz duyurulmadı. Güncellemeleri takip edin.',
+    city: 'Türkistan şehir sınırları içinde',
+    openAir: 'Açık alan; genellikle gün ışığında erişilebilir. Kesin saatleri kontrol edin.',
+    shrine: 'Kutsal alan: her gün, tercihen gündüz ziyaret edin. Mütevazı giyinin. Kesin saatleri kontrol edin.',
+    address: 'Türkistan (kesin adres doğrulanmalıdır)'
+  };
+
   // helper: P(id, name, desc, info)
   const P = (id, name, desc, info) => ({
     id,
     tag: id.toUpperCase(),
-    img: 'places/' + id + '.jpg',         // главное фото вверху страницы
+    img: (PHOTOS[id] && PHOTOS[id][0]) || '', // only use a real local photo; otherwise render a text placeholder
     qr: 'foto3.png.jpeg',
     kaspi: 'foto3.png.jpeg',
-    map: 'places/' + id + '-map.jpg',
+    // No separate map files exist for the imported places; use the existing
+    // project map image so Vercel does not request broken paths.
+    map: '',
     start: { label: 'QONAQ banner', lat: null, lng: null },
     end: { lat: null, lng: null },
     name, desc,
@@ -232,8 +266,29 @@
         ru: 'Священный мавзолей и место паломничества в Туркестанском регионе.' },
       { addr: { ru: 'Туркестанская область (точное местоположение уточнить)', kk: 'Түркістан облысы (нақты орнын нақтылау керек)', en: 'Turkistan Region (exact location to be confirmed)' },
         dist: { ru: 'Расстояние от Туркестана уточнить', kk: 'Түркістаннан қашықтығын нақтылау керек', en: 'Distance from Turkistan to be confirmed' },
-        sched: SHRINE })
+        sched: SHRINE }),
+
+    P('kuanysh-bazar',
+      { en: 'Kuanysh Bazar', kk: 'Қуаныш базар', ru: 'Базар «Қуаныш»', tr: 'Kuanysh Pazarı', uz: 'Quvonch bozori', ar: 'بازار كوانيش', zh: '库阿尼什集市', ko: '쿠아니시 바자르', ja: 'クアニシュ・バザール', fr: 'Bazar Kuanysh' },
+      { en: 'A local market in Turkistan where visitors can experience everyday trade, discover local products and goods, and feel the atmosphere of the city.', kk: 'Түркістандағы жергілікті базар. Мұнда күнделікті сауда-саттықты көріп, жергілікті өнімдер мен тауарларды тауып, қаланың тынысын сезінуге болады.', ru: 'Местный рынок Туркестана, где можно увидеть повседневную торговлю, найти местные товары и почувствовать атмосферу города.', tr: 'Türkistan’da günlük yerel ticareti görebileceğiniz, yöresel ürünleri keşfedebileceğiniz ve şehrin atmosferini hissedebileceğiniz pazar.', uz: 'Turkistondagi mahalliy bozor: kundalik savdoni kuzatish, mahalliy mahsulotlarni topish va shahar muhitini his qilish mumkin.', ar: 'سوق محلي في تركستان يتيح للزوار مشاهدة التجارة اليومية واكتشاف المنتجات المحلية والشعور بأجواء المدينة.', zh: '突厥斯坦的本地集市，游客可以体验日常交易、发现当地商品并感受城市氛围。', ko: '투르키스탄의 지역 시장으로, 일상적인 거래를 보고 현지 상품을 발견하며 도시의 분위기를 느낄 수 있습니다.', ja: 'トルキスタンの地元市場。日常の商いを見学し、地域の商品を探しながら街の雰囲気を体験できます。', fr: 'Un marché local de Turkistan où découvrir le commerce quotidien, les produits locaux et l’atmosphère de la ville.' },
+      { category: { en: 'Local market / Bazaar', kk: 'Жергілікті базар', ru: 'Местный рынок / базар', tr: 'Yerel pazar / çarşı', uz: 'Mahalliy bozor', ar: 'سوق محلي', zh: '本地集市', ko: '지역 시장', ja: '地元市場', fr: 'Marché local' }, addr: { en: '76XV+PP7 Kuanysh Bazar, Turkistan 161200', kk: '76XV+PP7 Қуаныш базары, Түркістан 161200', ru: '76XV+PP7, базар «Қуаныш», Туркестан, 161200', tr: '76XV+PP7 Kuanysh Pazarı, Türkistan 161200', uz: '76XV+PP7 Quvonch bozori, Turkiston 161200', ar: '76XV+PP7 سوق كوانيش، تركستان 161200', zh: '76XV+PP7 库阿尼什集市，突厥斯坦 161200', ko: '76XV+PP7 쿠아니시 바자르, 투르키스탄 161200', ja: '76XV+PP7 クアニシュ・バザール、トルキスタン 161200', fr: '76XV+PP7 Bazar Kuanysh, Turkistan 161200' }, dist: IN_CITY, sched: TBC, googleMaps: 'https://www.google.com/maps/place/Kuanysh+Bazar/@43.2994578,68.2449431,17z/data=!3m1!4b1!4m6!3m5!1s0x4200c28139667d01:0x6a08e15574fffd83!8m2!3d43.2994578!4d68.2449431!16s%2Fg%2F1hhkpf005', twoGis: 'https://2gis.kz/turkistan/search/Kuanysh%20Bazar' }),
+
+    P('altyn-orda-taxi',
+      { en: 'Altyn Orda', kk: 'Алтын Орда', ru: 'Алтын Орда', tr: 'Altyn Orda', uz: 'Altyn Orda', ar: 'ألتين أوردا', zh: '阿尔腾·奥尔达', ko: '알틴 오르다', ja: 'アルティン・オルダ', fr: 'Altyn Orda' },
+      { en: 'An intercity taxi gathering and departure point in Turkistan. Travelers can find taxis heading towards Shymkent here.', kk: 'Түркістандағы қалааралық таксилер жиналып, жолға шығатын орын. Мұнда Шымкент бағытына баратын таксилерді табуға болады.', ru: 'Место сбора и отправления междугородних такси в Туркестане. Здесь можно найти такси в сторону Шымкента.', tr: 'Türkistan’da şehirlerarası taksilerin toplandığı ve hareket ettiği nokta. Burada Şımkent yönüne giden taksiler bulunabilir.', uz: 'Turkistondagi shaharlararo taksilar to‘planib jo‘naydigan joy. Bu yerdan Chimkentga ketadigan taksilarni topish mumkin.', ar: 'نقطة تجمع وانطلاق سيارات الأجرة بين المدن في تركستان؛ يمكن العثور هنا على سيارات متجهة نحو شيمكنت.', zh: '突厥斯坦的城际出租车集合和出发点，游客可在此找到前往奇姆肯特方向的出租车。', ko: '투르키스탄의 도시 간 택시 집결·출발 지점입니다. 이곳에서 심켄트행 택시를 찾을 수 있습니다.', ja: 'トルキスタンの都市間タクシーの集合・出発地点。シムケント方面のタクシーをここで見つけられます。', fr: 'Point de rassemblement et de départ des taxis interurbains à Turkistan, notamment vers Chymkent.' },
+      { category: { en: 'Transportation / Intercity taxi stand', kk: 'Көлік / қалааралық такси тұрағы', ru: 'Транспорт / стоянка междугородних такси', tr: 'Ulaşım / şehirlerarası taksi durağı', uz: 'Transport / shaharlararo taksi bekati', ar: 'النقل / موقف سيارات أجرة بين المدن', zh: '交通 / 城际出租车站', ko: '교통 / 도시 간 택시 승강장', ja: '交通 / 都市間タクシー乗り場', fr: 'Transport / taxis interurbains' }, addr: { en: 'Tauke Khan Avenue, Avtovokzal Altyn Orda, Turkistan', kk: 'Тәуке хан даңғылы, «Алтын Орда» автовокзалы, Түркістан', ru: 'проспект Тауке хана, автовокзал «Алтын Орда», Туркестан', tr: 'Tauke Han Caddesi, Avtovokzal Altyn Orda, Türkistan', uz: 'Tauke Khan xiyoboni, Avtovokzal Altyn Orda, Turkiston', ar: 'جادة تاوكي خان، محطة حافلات ألتين أوردا، تركستان', zh: '突厥斯坦陶克汗大道，阿尔腾·奥尔达汽车站', ko: '투르키스탄 타우케 칸 거리, 알틴 오르다 버스터미널', ja: 'トルキスタン、タウケ・ハン通り、アルティン・オルダ・バスステーション', fr: 'Avenue Tauke Khan, Avtovokzal Altyn Orda, Turkistan' }, dist: IN_CITY, sched: TBC, googleMaps: 'https://www.google.com/maps/place/Avtovokzal+Altyn+Orda/data=!4m7!3m6!1s0x4200c285bc78b413:0x60abbf23c373fed8!8m2!3d43.3034215!4d68.248229!16s%2Fg%2F1hjh40119', twoGis: 'https://2gis.kz/turkistan/search/Avtovokzal%20Altyn%20Orda' })
   ];
+
+  NEW_PLACES.forEach(place => {
+    const copy = TR_PLACE_COPY[place.id];
+    if (copy) { place.name.tr = copy[0]; place.desc.tr = copy[1]; }
+    if (!place.info.googleMaps) place.info.addr.tr = trCommon.address;
+    place.info.dist.tr = trCommon.city;
+    place.info.sched.tr = place.info.sched === SHRINE ? trCommon.shrine : (place.info.sched === OPEN_AIR ? trCommon.openAir : trCommon.tbc);
+    place.info.events.tr = trCommon.noEvents;
+    if (!place.info.googleMaps) place.info.googleMaps = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(pick(place.name) + ' Turkistan');
+    if (!place.info.twoGis) place.info.twoGis = 'https://2gis.kz/turkistan/search/' + encodeURIComponent(pick(place.name));
+  });
 
   // Добавляем только один раз, старые места не трогаем
   NEW_PLACES.forEach(np => {
@@ -244,7 +299,8 @@
   const LBL = {
     ru: { h: 'Информация о месте', addr: 'Расположение', dist: 'Расстояние от Туркестана', sched: 'График работы', ev: 'Акции и мероприятия', ph: 'Фото' },
     kk: { h: 'Орын туралы ақпарат', addr: 'Орналасуы', dist: 'Түркістаннан қашықтығы', sched: 'Жұмыс кестесі', ev: 'Акциялар мен іс-шаралар', ph: 'Фотолар' },
-    en: { h: 'Place information', addr: 'Location', dist: 'Distance from Turkistan', sched: 'Opening hours', ev: 'Promotions & events', ph: 'Photos' }
+    en: { h: 'Place information', addr: 'Location', dist: 'Distance from Turkistan', sched: 'Opening hours', ev: 'Promotions & events', ph: 'Photos', category: 'Category', detail: 'Details' },
+    tr: { h: 'Mekân bilgileri', addr: 'Konum', dist: 'Türkistan’dan uzaklık', sched: 'Çalışma saatleri', ev: 'Kampanyalar ve etkinlikler', ph: 'Fotoğraflar', category: 'Kategori', detail: 'Ayrıntılar' }
   };
   const lb = k => (LBL[lang] || LBL.en)[k];
 
@@ -269,7 +325,9 @@
     const block = `
       <div class="guide-section" style="margin-top:20px">
         <h3 class="guide-section-title">ℹ️ ${lb('h')}</h3>
-        ${row('📍', lb('addr'), i.addr)}
+        ${addressBlock({ info: i })}
+        ${i.category ? row('🏷️', lb('category'), i.category) : ''}
+        ${i.detail ? row('📝', lb('detail'), i.detail) : ''}
         ${row('🚗', lb('dist'), i.dist)}
         ${row('🕒', lb('sched'), i.sched)}
         ${row('🎉', lb('ev'), i.events)}
